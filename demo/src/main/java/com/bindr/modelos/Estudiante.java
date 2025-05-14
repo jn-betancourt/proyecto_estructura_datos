@@ -2,23 +2,48 @@ package com.bindr.modelos;
 
 import java.util.*;
 
-// Clase Estudiante
-public class Estudiante {
-    private String id; // Nuevo campo
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
+// Clase Estudiante
+@Entity(name = "Estudiante")
+@Table(name = "estudiantes")
+public class Estudiante {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id; // Nuevo campo
+    @Column(nullable = false, length = 100)
     private String nombre;
+    @Column(nullable = false, unique = true)
     private String correo;
+    @Column(nullable = false, length = 100)
     private String contraseña;
+
+    @Transient
     private List<String> intereses;
+    @Transient
     private List<ContenidoEducativo> contenidosPublicados;
+    @Transient
     private List<Valoracion> valoracionesRealizadas;
+    @Transient
     private List<SolicitudAyuda> solicitudesAyuda;
+    @Transient
     private List<Estudiante> conexiones;
+    @Transient
     private List<GrupoEstudio> gruposEstudio;
+    @Transient
     private List<Mensaje> mensajes;
 
-    public Estudiante(String id, String nombre, String correo, String contraseña) {
-        this.id = id; // Inicialización del ID
+
+    public Estudiante(){}
+
+    public Estudiante(String nombre, String correo, String contraseña) {
+        this.id = null; // Inicialización del ID
 
         this.nombre = nombre;
         this.correo = correo;
@@ -67,7 +92,7 @@ public class Estudiante {
     public List<Estudiante> getConexiones() {
         return conexiones;
     }
-    public String getId() {
+    public int getId() {
         return id;
     }
 
