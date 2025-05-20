@@ -10,90 +10,93 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
-// Clase Estudiante
-@Entity(name = "Estudiante")
-@Table(name = "estudiantes")
+import java.util.ArrayList;
+import java.util.List;
+
 public class Estudiante {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // Nuevo campo
-    @Column(nullable = false, length = 100)
+    private Integer id;
     private String nombre;
-    @Column(nullable = false, unique = true)
     private String correo;
-    @Column(nullable = false, length = 100)
-    private String contraseña;
+    private String contrasena;
+    private List<Conversacion> conversaciones;
 
-    @Transient
-    private List<String> intereses;
-    @Transient
-    private List<ContenidoEducativo> contenidosPublicados;
-    @Transient
-    private List<Valoracion> valoracionesRealizadas;
-    @Transient
-    private List<SolicitudAyuda> solicitudesAyuda;
-    @Transient
-    private List<Estudiante> conexiones;
-    @Transient
-    private List<GrupoEstudio> gruposEstudio;
-    @Transient
-    private List<Mensaje> mensajes;
-
-
-    public Estudiante(){}
-
-    public Estudiante(String nombre, String correo, String contraseña) {
-        this.id = null; // Inicialización del ID
-
-        this.nombre = nombre;
-        this.correo = correo;
-        this.contraseña = contraseña;
-        this.intereses = new ArrayList<>();
-        this.contenidosPublicados = new ArrayList<>();
-        this.valoracionesRealizadas = new ArrayList<>();
-        this.solicitudesAyuda = new ArrayList<>();
-        this.conexiones = new ArrayList<>();
-        this.gruposEstudio = new ArrayList<>();
-        this.mensajes = new ArrayList<>();
+    public Estudiante() {
+        this.conversaciones = new ArrayList<>();
     }
 
-    // Métodos
-    public void publicarContenido(ContenidoEducativo contenido) {
-        contenidosPublicados.add(contenido);
-    }
-
-    public void valorarContenido(ContenidoEducativo contenido, int puntuacion, String comentario) {
-        Valoracion valoracion = new Valoracion(comentario, contenido, puntuacion, comentario, new Date());
-        valoracionesRealizadas.add(valoracion);
-        contenido.agregarValoracion(valoracion);
-    }
-
-    public void solicitarAyuda(String tema, int urgencia) {
-        SolicitudAyuda solicitud = new SolicitudAyuda(tema, this, tema, urgencia, new Date());
-        solicitudesAyuda.add(solicitud);
-    }
-
-    public void participarEnGrupo(GrupoEstudio grupo) {
-        gruposEstudio.add(grupo);
-        grupo.agregarEstudiante(this);
-    }
-
-    public void enviarMensaje(Estudiante destinatario, String contenido) {
-        Mensaje mensaje = new Mensaje(contenido, this, destinatario, contenido, new Date());
-        mensajes.add(mensaje);
-        destinatario.recibirMensaje(mensaje);
-    }
-
-    private void recibirMensaje(Mensaje mensaje) {
-        mensajes.add(mensaje);
-    }
-
-    // Getters y Setters
-    public List<Estudiante> getConexiones() {
-        return conexiones;
-    }
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public List<Conversacion> getConversaciones() {
+        return conversaciones;
+    }
+
+    public void setConversaciones(List<Conversacion> conversaciones) {
+        this.conversaciones = conversaciones;
+    }
+
+    public static class Builder {
+        private Integer id;
+        private String nombre;
+        private String correo;
+        private String contrasena;
+
+        public Builder id(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder nombre(String nombre) {
+            this.nombre = nombre;
+            return this;
+        }
+
+        public Builder correo(String correo) {
+            this.correo = correo;
+            return this;
+        }
+
+        public Builder contrasena(String contrasena) {
+            this.contrasena = contrasena;
+            return this;
+        }
+
+        public Estudiante build() {
+            Estudiante estudiante = new Estudiante();
+            estudiante.setId(id);
+            estudiante.setNombre(nombre);
+            estudiante.setCorreo(correo);
+            estudiante.setContrasena(contrasena);
+            return estudiante;
+        }
+    }
 }
