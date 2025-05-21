@@ -7,9 +7,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.shape.Path;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 public class VistaPerfilUsuarioController {
 
@@ -58,10 +62,13 @@ public class VistaPerfilUsuarioController {
     @FXML
     private TextField textFieldInstitucion;
 
+    private File archivoSeleccionado; // Ahora usamos directamente el File
+
     public void setNombreUsuario(String nombre) {
         nombreUsuario.setText(nombre);
 
     }
+
 
 
     @FXML
@@ -141,6 +148,65 @@ public class VistaPerfilUsuarioController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void subirArchivo() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar archivo");
+
+        // Configurar filtros para tipos de archivos
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("PDF", "*.pdf"),
+                new FileChooser.ExtensionFilter("Documentos Word", "*.docx"),
+                new FileChooser.ExtensionFilter("Presentaciones", "*.pptx"),
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        Stage stage = (Stage) btnSubirArchivo.getScene().getWindow();
+        archivoSeleccionado = fileChooser.showOpenDialog(stage);
+
+        if (archivoSeleccionado != null) {
+            mostrarAlerta("Éxito", "Archivo seleccionado: " + archivoSeleccionado.getName());
+        }
+    }
+
+    @FXML
+    private void publicar() {
+        // Validación básica
+        if (labelTituloContenido.getText().isEmpty() ||
+                labelAutor.getText().isEmpty() ||
+                labelTema.getText().isEmpty() ||
+                date.getValue() == null) {
+
+            mostrarAlerta("Error", "Todos los campos son obligatorios");
+            return;
+        }
+
+        if (archivoSeleccionado == null) {
+            mostrarAlerta("Error", "Debes seleccionar un archivo primero");
+            return;
+        }
+
+        // Aquí iría la lógica para guardar en tu sistema
+        String resumen = "Publicación creada:\n" +
+                "Título: " + labelTituloContenido.getText() + "\n" +
+                "Autor: " + labelAutor.getText() + "\n" +
+                "Tema: " + labelTema.getText() + "\n" +
+                "Fecha: " + date.getValue() + "\n" +
+                "Archivo: " + archivoSeleccionado.getName();
+
+        mostrarAlerta("Publicación Exitosa", resumen);
+        limpiarCampos();
+    }
+
+    private void limpiarCampos() {
+        labelTituloContenido.clear();
+        labelAutor.clear();
+        labelTema.clear();
+        date.setValue(null);
+        archivoSeleccionado = null;
+    }
+
 
 }
 
