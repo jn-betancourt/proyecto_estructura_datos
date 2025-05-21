@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bindr.controladores.VistaPrincipalUsuarioController">
+   <children>
+      <VBox layoutX="251.0" prefHeight="50.0" prefWidth="132.0">
+         <children>
+            <Label alignment="TOP_CENTER" prefHeight="55.0" prefWidth="200.0" style="-fx-text-fill: #ff9f19;" text="BINDR" textAlignment="CENTER" textFill="#ff9f19">
+               <font>
+                  <Font name="Rockwell Condensed Bold" size="38.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <BorderPane layoutX="-3.0" layoutY="12.0" prefHeight="495.0" prefWidth="619.0" style="-fx-background-radius: 20;">
+         <top>
+            <HBox prefHeight="34.0" prefWidth="506.0" BorderPane.alignment="CENTER_LEFT">
+               <children>
+                  <TextField fx:id="textFieldBuscar" prefHeight="30.0" prefWidth="173.0" promptText="Buscar" style="-fx-background-radius: 20; -fx-background-color: #f0f0f0; -fx-border-radius: 10;">
+                     <opaqueInsets>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#Click" onMouseDragEntered="#handleHoverOn" onMouseDragExited="#handleHoverOff" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" text="Buscar" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnInicio" mnemonicParsing="false" onMouseDragEntered="#handleHoverOn" onMouseDragExited="#handleHoverOff" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #feb622; -fx-background-radius: 10; -fx-text-fill: #ffffff;" text="Inicio" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnSugerencias" mnemonicParsing="false" onMouseDragEntered="#handleHoverOn" onMouseDragExited="#handleHoverOff" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #feb622; -fx-background-radius: 10; -fx-text-fill: #ffffff;" text="Sugerencias" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnSolicitudes" mnemonicParsing="false" onMouseDragEntered="#handleHoverOn" onMouseDragExited="#handleHoverOff" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #feb622; -fx-background-radius: 10; -fx-text-fill: #ffffff;" text="Solicitudes" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets top="50.0" />
+               </BorderPane.margin>
+            </HBox>
+         </top>
+         <left>
+            <VBox fx:id="ContenedorBotonesIzquierda" prefHeight="449.0" prefWidth="141.0" spacing="15.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btnPerfil" mnemonicParsing="false" onAction= "#irAPerfil" onMouseDragEntered="#handleHoverOn" onMouseDragExited="#handleHoverOff" prefHeight="56.0" prefWidth="166.0" style="-fx-background-color: #faa729; -fx-background-radius: 10; -fx-text-fill: #ffffff;" text=" Perfil" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnMensajes" mnemonicParsing="false" onAction="#irAMensajeUsuario" onMouseDragEntered="#handleHoverOn" onMouseDragExited="#handleHoverOff" prefHeight="56.0" prefWidth="166.0" style="-fx-background-color: #faa729; -fx-background-radius: 10; -fx-text-fill: #ffffff;" text="Mensajes" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin></Button>
+                  <Button fx:id="btnAmigos" mnemonicParsing="false" onAction="#irAAmigos" onMouseDragEntered="#handleHoverOn" onMouseDragExited="#handleHoverOff" prefHeight="56.0" prefWidth="166.0" style="-fx-background-color: #faa729; -fx-background-radius: 10; -fx-text-fill: #ffffff;" text="Amigos" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin></Button>
+                  <Button fx:id="btnGruposDeEstudio" onAction="#irAGrupos" mnemonicParsing="false" onMouseDragEntered="#handleHoverOn" onMouseDragExited="#handleHoverOff" prefHeight="56.0" prefWidth="166.0" style="-fx-background-color: #faa729; -fx-background-radius: 10; -fx-text-fill: #ffffff;" text="Grupos" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin></Button>
+                  <Button fx:id="btnAyuda" mnemonicParsing="false" onMouseDragEntered="#handleHoverOn" onMouseDragExited="#handleHoverOff" prefHeight="56.0" prefWidth="166.0" style="-fx-background-color: #faa729; -fx-background-radius: 10; -fx-text-fill: #ffffff;" text="Ayuda" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin></Button>
+                  <Button fx:id="btnConfiguracion" mnemonicParsing="false" onAction="#irAConfiguracion" onMouseDragEntered="#handleHoverOn" onMouseDragExited="#handleHoverOff" prefHeight="56.0" prefWidth="166.0" style="-fx-background-color: #faa729; -fx-background-radius: 10; -fx-text-fill: #ffffff;" text="Configuración" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                     </VBox.margin></Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </VBox>
+         </left>
+         <center>
+            <ScrollPane prefHeight="392.0" prefWidth="412.0" BorderPane.alignment="CENTER">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <BorderPane.margin>
+                  <Insets left="20.0" top="20.0" />
+               </BorderPane.margin>
+               <content>
+                  <AnchorPane prefHeight="394.0" prefWidth="410.0">
+                     <children>
+                        <VBox fx:id="ContenedorPublicaciones" layoutX="2.0" layoutY="2.0" prefHeight="390.0" prefWidth="412.0" spacing="10.0">
+                           <children>
+                              <VBox prefHeight="121.0" prefWidth="412.0">
+                                 <children>
+                                    <VBox prefHeight="31.0" prefWidth="412.0">
+                                       <children>
+                                          <Label fx:id="labelTitulo" text="Programaciòn avanzada" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="29.0" prefWidth="412.0">
+                                       <children>
+                                          <Label fx:id="labelFecha" text="11 de abril de 2025" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="31.0" prefWidth="412.0">
+                                       <children>
+                                          <Label fx:id="labelAutor" text="autor" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="85.0" prefWidth="412.0">
+                                       <children>
+                                          <Label fx:id="labelDescripcion" text="Blablabla" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="135.0" prefWidth="410.0">
+                                 <children>
+                                    <Separator prefWidth="200.0" />
+                                    <VBox prefHeight="121.0" prefWidth="412.0">
+                                       <children>
+                                          <VBox prefHeight="31.0" prefWidth="412.0">
+                                             <children>
+                                                <Label fx:id="labelTitulo1" text="Programaciòn avanzada" />
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="29.0" prefWidth="412.0">
+                                             <children>
+                                                <Label fx:id="labelFecha1" text="11 de abril de 2025" />
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="31.0" prefWidth="412.0">
+                                             <children>
+                                                <Label fx:id="labelAutor1" text="autor" />
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="85.0" prefWidth="412.0">
+                                             <children>
+                                                <Label fx:id="labelDescripcion1" text="Blablabla" />
+                                             </children>
+                                          </VBox>
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="121.0" prefWidth="412.0">
+                                 <children>
+                                    <VBox prefHeight="31.0" prefWidth="412.0">
+                                       <children>
+                                          <Label fx:id="labelTitulo2" text="Programaciòn avanzada" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="29.0" prefWidth="412.0">
+                                       <children>
+                                          <Label fx:id="labelFecha2" text="11 de abril de 2025" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="31.0" prefWidth="412.0">
+                                       <children>
+                                          <Label fx:id="labelAutor2" text="autor" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="85.0" prefWidth="412.0">
+                                       <children>
+                                          <Label fx:id="labelDescripcion2" text="Blablabla" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
