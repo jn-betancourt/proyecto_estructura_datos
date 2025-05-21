@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.PasswordField?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bindr.controladores.VistaRegistroController">
    <children>
       <ImageView fitHeight="745.0" fitWidth="409.0" layoutX="-9.0" layoutY="-181.0" opacity="0.6" pickOnBounds="true">
@@ -76,11 +77,11 @@
                         <Insets left="70.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="textFieldContraseña" prefHeight="25.0" prefWidth="185.0" promptText="Ingrese contraseña" style="-fx-background-color: #f0f0f0; -fx-background-radius: 20; -fx-border-radius: 20;">
+                  <PasswordField fx:id="textFieldContraseña" prefHeight="25.0" prefWidth="185.0" promptText="Ingrese contraseña" style="-fx-background-color: #f0f0f0; -fx-background-radius: 20; -fx-border-radius: 20;">
                      <HBox.margin>
                         <Insets left="60.0" />
                      </HBox.margin>
-                  </TextField>
+                  </PasswordField>
                </children>
                <VBox.margin>
                   <Insets top="20.0" />

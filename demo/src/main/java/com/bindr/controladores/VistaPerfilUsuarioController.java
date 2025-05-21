@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -53,18 +50,50 @@ public class VistaPerfilUsuarioController {
     private Label nombreUsuario;
 
     @FXML
-    private TextField textFieldContraseñaAnterior;
+    private TextField textFieldDescripcion;
 
     @FXML
-    private TextField textFieldContraseñaAnterior1;
+    private TextField textFieldTipoUsuario;
 
     @FXML
-    private TextField textFieldContraseñaAnterior11;
+    private TextField textFieldInstitucion;
+
+    public void setNombreUsuario(String nombre) {
+        nombreUsuario.setText(nombre);
+
+    }
 
 
     @FXML
     void guardar(ActionEvent event) {
+        // 1. Obtener los valores de los campos de entrada
+        String tipoUsuario = textFieldTipoUsuario.getText();
+        String descripcion = textFieldDescripcion.getText();
+        String institucion = textFieldInstitucion.getText();
 
+        // 2. Validar que no estén vacíos (opcional)
+        if(tipoUsuario.isEmpty() || descripcion.isEmpty() || institucion.isEmpty()) {
+            mostrarAlerta("Error", "Todos los campos son obligatorios");
+            return;
+        }
+
+        // 3. Asignar los valores a los labels de visualización
+        labelTipoUsuario.setText(tipoUsuario);
+        labelDescripcion.setText(descripcion);
+        labelInstitucion.setText(institucion);
+
+        // 4. Mostrar confirmación
+        mostrarAlerta("Éxito", "Perfil guardado correctamente");
+
+        // Aquí podrías agregar lógica para guardar en base de datos
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 
     @FXML
@@ -86,6 +115,21 @@ public class VistaPerfilUsuarioController {
     private void irAInicio(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/VistaPrincipalUsuario.fxml"));
+            Parent configView = loader.load();
+
+            Scene scene = new Scene(configView);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void irAPublicaciones(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VistaPublicaciones.fxml"));
             Parent configView = loader.load();
 
             Scene scene = new Scene(configView);

@@ -3,69 +3,66 @@ package com.bindr.controladores;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.regex.Pattern;
-
-import static org.hibernate.cfg.JdbcSettings.URL;
 
 public class VistaRegistroController {
 
-    @FXML
-    private Button btnIniciaSesion;
-
-    @FXML
-    private Button btnRegistrarse;
-
-    @FXML
-    private TextField textFieldContraseña;
-
-    @FXML
-    private TextField textFieldCorreo;
-
-    @FXML
-    private TextField textFieldNombreUsuario;
+    @FXML private PasswordField textFieldContraseña;
+    @FXML private TextField textFieldCorreo;
+    @FXML private TextField textFieldNombreUsuario;
 
     @FXML
     private void registrarse(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VistaLogin.fxml"));
-            Parent configView = loader.load();
+        String nombre = textFieldNombreUsuario.getText().trim();
+        String correo = textFieldCorreo.getText().trim();
+        String contraseña = textFieldContraseña.getText().trim();
 
-            Scene scene = new Scene(configView);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (nombre.isEmpty() || correo.isEmpty() || contraseña.isEmpty()) {
+            mostrarAlerta("Error", "Todos los campos son obligatorios");
+            return;
         }
+
+        if (!correo.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+            mostrarAlerta("Error", "Formato de correo inválido");
+            return;
+        }
+
+        VistaLoginController.agregarUsuarioRegistrado(correo, contraseña);
+        mostrarAlerta("Éxito", "Registro completado");
+        irALogin(event);
     }
 
     @FXML
     private void irALogin(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VistaLogin.fxml"));
-            Parent configView = loader.load();
-
-            Scene scene = new Scene(configView);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
+            Stage stage = (Stage) textFieldCorreo.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/VistaLogin.fxml"));
+            stage.setScene(new Scene(root));
             stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            mostrarAlerta("Error", "No se pudo cargar el login");
         }
     }
-}
 
+    @FXML
+    private void irARegistrar(ActionEvent event) {
+        try {
+            Stage stage = (Stage) textFieldCorreo.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/VistaLogin.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            mostrarAlerta("Error", "No se pudo cargar el login");
+        }
+    }
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+}
