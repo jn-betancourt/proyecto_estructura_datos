@@ -7,65 +7,68 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class VistaConfiguracionController {
-
-    @FXML
-    private Button btnActualizarFoto;
-
-    @FXML
-    private Button btnAtras;
-
-    @FXML
-    private Button btnCambiarContraseña;
-
-    @FXML
-    private Button btnCambiarCorreo;
-
-    @FXML
-    private Button btnCambiarNombre;
+public class VistaPerfilUsuarioController {
 
     @FXML
     private Button btnCerrarSesion;
 
     @FXML
-    private TextField textFieldCambiarNombre;
+    private Button btnGuardarPerfil;
+
+    @FXML
+    private Button btnPublicar;
+
+    @FXML
+    private Button btnSubirArchivo;
+
+    @FXML
+    private DatePicker date;
+
+    @FXML
+    private TextField labelAutor;
+
+    @FXML
+    private TextField labelDescripcion;
+
+    @FXML
+    private TextField labelInstitucion;
+
+    @FXML
+    private TextField labelTema;
+
+    @FXML
+    private TextField labelTipoUsuario;
+
+    @FXML
+    private TextField labelTituloContenido;
+
+    @FXML
+    private Label nombreUsuario;
 
     @FXML
     private TextField textFieldContraseñaAnterior;
 
     @FXML
-    private TextField textFieldNuevaContraseña;
+    private TextField textFieldContraseñaAnterior1;
 
     @FXML
-    private TextField textFieldNuevoCorreo;
+    private TextField textFieldContraseñaAnterior11;
+
 
     @FXML
-    void ActualizarFotoPerfil(ActionEvent event) {
+    void guardar(ActionEvent event) {
 
     }
 
     @FXML
-    void cambiarContraseña(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cambiarCorreo(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cambiarNombreUsuario(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cerrarSesion(ActionEvent event) {
+    private void cerrarSesion(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/VistaLogin.fxml"));
             Parent configView = loader.load();
@@ -78,9 +81,7 @@ public class VistaConfiguracionController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
     @FXML
     private void irAInicio(ActionEvent event) {
         try {

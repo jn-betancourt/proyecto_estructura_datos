@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 public class SolicitudAyuda {
     private Integer id;
     private Estudiante estudiante;
-    private TipoSolicitud tipo;
-    private Destinatario destinatario;
+    //private TipoSolicitud tipo;
+    //private Destinatario destinatario;
     private LocalDateTime fecha;
     private boolean resuelta;
 
@@ -31,21 +31,22 @@ public class SolicitudAyuda {
         this.estudiante = estudiante;
     }
 
-    public TipoSolicitud getTipo() {
-        return tipo;
-    }
+    //public TipoSolicitud getTipo() {
+        //return tipo;
 
-    public void setTipo(TipoSolicitud tipo) {
-        this.tipo = tipo;
-    }
+//}
 
-    public Destinatario getDestinatario() {
-        return destinatario;
-    }
+    //public void setTipo(TipoSolicitud tipo) {
+     //   this.tipo = tipo;
+    //}
 
-    public void setDestinatario(Destinatario destinatario) {
-        this.destinatario = destinatario;
-    }
+    //public Destinatario getDestinatario() {
+      //  return destinatario;
+    //}
+
+    //public void setDestinatario(Destinatario destinatario) {
+      //  this.destinatario = destinatario;
+    //}
 
     public LocalDateTime getFecha() {
         return fecha;
@@ -70,8 +71,8 @@ public class SolicitudAyuda {
     public static class Builder {
         private Integer id;
         private Estudiante estudiante;
-        private TipoSolicitud tipo;
-        private Destinatario destinatario;
+        //private TipoSolicitud tipo;
+        //private Destinatario destinatario;
         private LocalDateTime fecha;
         private boolean resuelta;
 
@@ -85,32 +86,32 @@ public class SolicitudAyuda {
             return this;
         }
 
-        public Builder tipo(TipoSolicitud tipo) {
-            this.tipo = tipo;
-            return this;
-        }
+        //public Builder tipo(TipoSolicitud tipo) {
+         //   this.tipo = tipo;
+           // return this;
+        //}
 
-        public Builder destinatario(Destinatario destinatario) {
-            this.destinatario = destinatario;
-            return this;
-        }
+        //public Builder destinatario(Destinatario destinatario) {
+        //    this.destinatario = destinatario;
+          //  return this;
+        //}
 
-        public Builder fecha(LocalDateTime fecha) {
-            this.fecha = fecha;
-            return this;
-        }
+        //public Builder fecha(LocalDateTime fecha) {
+          //  this.fecha = fecha;
+            //return this;
+        //}
 
-        public Builder resuelta(boolean resuelta) {
-            this.resuelta = resuelta;
-            return this;
-        }
+        //public Builder resuelta(boolean resuelta) {
+          //  this.resuelta = resuelta;
+            //return this;
+        //}
 
         public SolicitudAyuda build() {
             SolicitudAyuda solicitud = new SolicitudAyuda();
             solicitud.setId(id);
             solicitud.setEstudiante(estudiante);
-            solicitud.setTipo(tipo);
-            solicitud.setDestinatario(destinatario);
+            //solicitud.setTipo(tipo);
+            //solicitud.setDestinatario(destinatario);
             solicitud.setFecha(fecha);
             solicitud.setResuelta(resuelta);
             return solicitud;

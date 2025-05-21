@@ -27,9 +27,9 @@ public class App extends Application {
         EntityManager manager = HibernateConfig.getEntityManager();
         try{
             manager.getTransaction().begin();
-            Estudiante est = new Estudiante("juan", "j", "juanito2006");
-            manager.persist(est);
-            manager.getTransaction().commit();
+            //Estudiante est = new Estudiante("juan", "j", "juanito2006");
+            //manager.persist(est);
+            //manager.getTransaction().commit();
         }catch (Exception e){
             manager.getTransaction().rollback();
             e.printStackTrace(System.out);

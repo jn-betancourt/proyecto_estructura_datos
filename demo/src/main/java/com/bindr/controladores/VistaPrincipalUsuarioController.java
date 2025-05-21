@@ -74,9 +74,9 @@ public class VistaPrincipalUsuarioController {
     }
 
     @FXML
-    void irAConfiguracion(ActionEvent event) {
+    void irAPerfil(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VistaConfiguracionUsuario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VistaPerfilUsuario.fxml"));
             Parent configView = loader.load();
 
             Scene scene = new Scene(configView);
@@ -105,6 +105,54 @@ public class VistaPrincipalUsuarioController {
         }
     }
 
+    @FXML
+    void irAAmigos(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VistaAmigosUsuario.fxml"));
+            Parent configView = loader.load();
+
+            Scene scene = new Scene(configView);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void irAGrupos(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VistaGruposUsuario.fxml"));
+            Parent configView = loader.load();
+
+            Scene scene = new Scene(configView);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    void irAConfiguracion(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VistaConfiguracionUsuario.fxml"));
+            Parent configView = loader.load();
+
+            Scene scene = new Scene(configView);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void handleHoverOff(MouseDragEvent event) {
