@@ -2,10 +2,8 @@ package com.bindr;
 
 import java.io.IOException;
 
-import com.bindr.dto.RegistroRequestDTO;
-import com.bindr.persistencia.HibernateConfig;
-import com.bindr.servicios.AutenticacionService;
 
+import com.bindr.persistencia.HibernateConfig;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -18,12 +16,6 @@ public class App extends Application {
     private static Scene scene;
 
     public static void main(String[] args) {
-        var reg = new RegistroRequestDTO("juan", "juan@mail", "123");
-        AutenticacionService ser = new AutenticacionService();
-        var nuevo = ser.registrar(reg);
-        System.out.println(nuevo.correo() +" - "+ nuevo.id()); // EJEMPLO DE COMO SE PUEDE UTULIZAR EL SERVICIO
-        var reg2 = new RegistroRequestDTO("juan1", "jua1n@mail", "123");
-        ser.registrar(reg2);
         launch();
     }
 

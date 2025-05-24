@@ -32,22 +32,12 @@ public class PublicacionService {
     }
 
     // Obtener todas las publicaciones en formato DTO
-    // public static List<PublicacionDTO> obtenerTodas() {
-    //     List<Publicacion> publicaciones = PublicacionDao.listarTodas();
-
-    //     return publicaciones.stream().map(pub -> {
-    //         Estudiante est = pub.getPublicador();
-    //         EstudianteDto estDto = new EstudianteDto(est.getNombre(), est.getCorreo());
-
-    //         return new PublicacionDto(
-    //             pub.getId(),
-    //             estDto,
-    //             pub.getFecha(),
-    //             pub.getTitulo(),
-    //             pub.getMaterias()
-    //         );
-    //     }).collect(Collectors.toList());
-    // }
+    public static List<PublicacionDTO> obtenerTodas() {
+        List<Publicacion> publicaciones = PublicacionDao.listarTodas();
+        return publicaciones.stream()
+        .map(PublicacionDTO::fromEntity) // convierte cada publicación a DTO
+        .collect(Collectors.toList());
+    }
 
     // Buscar publicación por ID
     public static PublicacionDTO buscarPorId(Long id) {
