@@ -2,33 +2,39 @@ package com.bindr.modelos;
 
 import java.util.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
+@Entity
+@Table(name = "estudiantes")
 public class Estudiante {
-    private Integer id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
+
+    @Column(name = "correo", nullable = false, unique = true, length = 150)
     private String correo;
-    private String contrasena;
+
+    @Column(name = "contraseña", nullable = false, length = 64)
+    private String contraseña;
+
+      @ManyToMany(mappedBy = "participantes")
     private List<Conversacion> conversaciones;
 
     public Estudiante() {
         this.conversaciones = new ArrayList<>();
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -48,12 +54,12 @@ public class Estudiante {
         this.correo = correo;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getContraseña() {
+        return contraseña;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setContraseña(String contrasena) {
+        this.contraseña = contrasena;
     }
 
     public List<Conversacion> getConversaciones() {
@@ -64,13 +70,17 @@ public class Estudiante {
         this.conversaciones = conversaciones;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
     public static class Builder {
-        private Integer id;
+        private Long id;
         private String nombre;
         private String correo;
         private String contrasena;
 
-        public Builder id(Integer id) {
+        public Builder id(Long id) {
             this.id = id;
             return this;
         }
@@ -95,7 +105,7 @@ public class Estudiante {
             estudiante.setId(id);
             estudiante.setNombre(nombre);
             estudiante.setCorreo(correo);
-            estudiante.setContrasena(contrasena);
+            estudiante.setContraseña(contrasena);
             return estudiante;
         }
     }
