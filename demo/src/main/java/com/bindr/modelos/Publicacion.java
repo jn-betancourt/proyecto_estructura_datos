@@ -1,45 +1,60 @@
 package com.bindr.modelos;
 
-import java.io.File;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bindr.converters.MateriaEnumListConverter;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "publicacion")
 public class Publicacion {
-    private Integer id;
-    private Estudiante Publicador;
-    private LocalDate fecha;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "publicador_id")
+    private Estudiante publicador;
+
+    @Column(name = "fecha_creacion", nullable = false, updatable = false)
+    private LocalDateTime fecha;
+
+    @Column(name = "titulo", nullable = false, length = 100)
     private String titulo;
-    private File archivo;
-    private String cuerpo;
-    private List<MateriaEstudio> materias;
+
+    @Convert(converter = MateriaEnumListConverter.class)
+    @Column(columnDefinition = "TEXT") // opcional, si la lista es larga
+    private List<MateriaEstudio> materias = new ArrayList<>();
 
     public Publicacion() {
         this.materias = new ArrayList<>();
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public Estudiante getPublicador() {
-        return Publicador;
+        return publicador;
     }
 
     public void setPublicador(Estudiante publicador) {
-        this.Publicador = publicador;
+        this.publicador = publicador;
     }
 
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 
@@ -49,22 +64,6 @@ public class Publicacion {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-
-    public File getArchivo() {
-        return archivo;
-    }
-
-    public void setArchivo(File Archivo) {
-        this.archivo = Archivo;
-    }
-
-    public String getCuerpo() {
-        return cuerpo;
-    }
-
-    public void setCuerpo(String cuerpo) {
-        this.cuerpo = cuerpo;
     }
 
     public List<MateriaEstudio> getMaterias() {
@@ -82,14 +81,13 @@ public class Publicacion {
     }
 
     public static class Builder {
-        private Integer id;
+        private Long id;
         private Estudiante publicador;
         private LocalDateTime fecha;
         private String titulo;
-        private String cuerpo;
         private List<MateriaEstudio> materias = new ArrayList<>();
 
-        public Builder id(Integer id) {
+        public Builder id(Long id) {
             this.id = id;
             return this;
         }
@@ -109,11 +107,6 @@ public class Publicacion {
             return this;
         }
 
-        public Builder cuerpo(String cuerpo) {
-            this.cuerpo = cuerpo;
-            return this;
-        }
-
         public Builder materias(List<MateriaEstudio> materias) {
             this.materias = materias;
             return this;
@@ -123,9 +116,8 @@ public class Publicacion {
             Publicacion publicacion = new Publicacion();
             publicacion.setId(id);
             publicacion.setPublicador(publicador);
-            publicacion.setFecha(fecha.toLocalDate());
+            publicacion.setFecha(fecha);
             publicacion.setTitulo(titulo);
-            publicacion.setCuerpo(cuerpo);
             publicacion.setMaterias(materias);
             return publicacion;
         }
