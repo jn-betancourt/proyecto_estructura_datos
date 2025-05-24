@@ -67,36 +67,6 @@ public class VistaPublicacionescontroller {
         tablaPublicaciones.setItems(publicaciones);
     }
 
-    @FXML
-    public void initialize() {
-        columnaTitulo.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getTitulo()));
-
-        columnaAutor.setCellValueFactory(data -> {
-            Estudiante est = data.getValue().getPublicador();
-            return new SimpleStringProperty(est != null ? est.toString() : "Sin autor");
-        });
-
-        columnaFecha.setCellValueFactory(data -> {
-            LocalDate fecha = data.getValue().getFecha();
-            return new SimpleStringProperty(fecha != null ? fecha.toString() : "");
-        });
-
-        columnaArchivo.setCellValueFactory(data -> {
-            File archivo = data.getValue().getArchivo();
-            return new SimpleStringProperty(archivo != null ? archivo.getName() : "Sin archivo");
-        });
-
-        columnaTema.setCellValueFactory(data -> {
-            List<MateriaEstudio> materias = data.getValue().getMaterias();
-            // Suponiendo que solo quieres mostrar la primera materia
-            String texto = (materias != null && !materias.isEmpty())
-                    ? materias.get(0).name() // o .toString()
-                    : "Sin materia";
-            return new SimpleStringProperty(texto);
-        });
-    }
-
 
     @FXML
     void irAInicio(ActionEvent event) {
