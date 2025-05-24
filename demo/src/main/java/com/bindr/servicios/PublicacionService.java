@@ -16,7 +16,7 @@ public class PublicacionService {
 
     // Crear nueva publicación
     public static boolean crearPublicacion(PublicacionDTO dto) {
-        Estudiante publicador = EstudianteDao.buscarPorCorreo(dto.publicador().correo());
+        Estudiante publicador = EstudianteDao.buscarPorEmail(dto.publicador().correo());
         if (publicador == null) {
             return false;
         }
