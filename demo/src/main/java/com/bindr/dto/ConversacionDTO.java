@@ -9,4 +9,5 @@ public record ConversacionDTO(
     List<EstudianteDTO> participantes,
     List<MensajeDTO> mensajes,
     boolean esGrupo
-) {}
+) {
+}

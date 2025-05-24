@@ -23,6 +23,9 @@ public class Publicacion {
     @Column(name = "fecha_creacion", nullable = false, updatable = false)
     private LocalDateTime fecha;
 
+    @Column(name = "archivo_uri", nullable = true)
+    private String archivo;
+
     @Column(name = "titulo", nullable = false, length = 100)
     private String titulo;
 
@@ -73,6 +76,12 @@ public class Publicacion {
     public void setMaterias(List<MateriaEstudio> materias) {
         this.materias = materias;
     }
+    public String getArchivo() {
+        return archivo;
+    }
+    public void setArchivo(String archivo) {
+        this.archivo = archivo;
+    }
 
     public void agregarMateria(MateriaEstudio materia) {
         if (!materias.contains(materia)) {
@@ -84,6 +93,7 @@ public class Publicacion {
         private Long id;
         private Estudiante publicador;
         private LocalDateTime fecha;
+        private String archivo;
         private String titulo;
         private List<MateriaEstudio> materias = new ArrayList<>();
 
@@ -102,6 +112,11 @@ public class Publicacion {
             return this;
         }
 
+        private Builder archivo(String archivo) {
+            this.archivo = archivo;
+            return this;
+        }
+
         public Builder titulo(String titulo) {
             this.titulo = titulo;
             return this;
@@ -117,6 +132,7 @@ public class Publicacion {
             publicacion.setId(id);
             publicacion.setPublicador(publicador);
             publicacion.setFecha(fecha);
+            publicacion.setArchivo(archivo);
             publicacion.setTitulo(titulo);
             publicacion.setMaterias(materias);
             return publicacion;

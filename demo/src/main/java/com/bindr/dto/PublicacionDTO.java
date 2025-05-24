@@ -7,21 +7,23 @@ import com.bindr.modelos.MateriaEstudio;
 import com.bindr.modelos.Publicacion;
 
 public record PublicacionDTO(
-    Long id,
-    EstudianteDTO publicador,
-    LocalDateTime fecha,
-    String titulo,
-    List<MateriaEstudio> materias
+        Long id,
+        EstudianteDTO publicador,
+        LocalDateTime fecha,
+        String titulo,
+        List<MateriaEstudio> materias,
+        String archivo // nueva propiedad
 ) {
-      public static PublicacionDTO fromEntity(Publicacion publicacion) {
+    public static PublicacionDTO fromEntity(Publicacion publicacion) {
         if (publicacion == null) return null;
 
         return new PublicacionDTO(
-            publicacion.getId(),
-            EstudianteDTO.fromEntity(publicacion.getPublicador()),
-            publicacion.getFecha(),
-            publicacion.getTitulo(),
-            publicacion.getMaterias()
+                publicacion.getId(),
+                EstudianteDTO.fromEntity(publicacion.getPublicador()),
+                publicacion.getFecha(),
+                publicacion.getTitulo(),
+                publicacion.getMaterias(),
+                publicacion.getArchivo()
         );
     }
 
@@ -32,6 +34,7 @@ public record PublicacionDTO(
         pub.setFecha(fecha);
         pub.setPublicador(publicador != null ? publicador.toEntity() : null);
         pub.setMaterias(materias);
+        pub.setArchivo(archivo); // nueva propiedad
         return pub;
     }
 }

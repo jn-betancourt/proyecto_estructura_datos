@@ -1,6 +1,9 @@
 package com.bindr.servicios;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.*;
+import java.time.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +16,30 @@ import com.bindr.modelos.MateriaEstudio;
 import com.bindr.modelos.Publicacion;
 
 public class PublicacionService {
+
+    private static final String CARPETA_ARCHIVOS = "publicaciones_archivos";
+
+    public String guardarArchivo(InputStream archivoInput, String nombreArchivo) throws IOException {
+        Path dir = Paths.get(CARPETA_ARCHIVOS);
+        if (!Files.exists(dir)) {
+            Files.createDirectories(dir);
+        }
+        Path archivoDestino = dir.resolve(nombreArchivo);
+        Files.copy(archivoInput, archivoDestino, StandardCopyOption.REPLACE_EXISTING);
+        return archivoDestino.toAbsolutePath().toString();
+    }
+
+    public boolean crearPublicacionConArchivo(PublicacionDTO dto, InputStream archivoInput, String nombreArchivo) {
+        try {
+            String uriArchivo = guardarArchivo(archivoInput, nombreArchivo);
+            Publicacion publicacion = dto.toEntity();
+            publicacion.setArchivo(uriArchivo);
+            return PublicacionDao.crear(publicacion);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     // Crear nueva publicación
     public static boolean crearPublicacion(PublicacionDTO dto) {
@@ -52,7 +79,7 @@ public class PublicacionService {
             estDto,
             pub.getFecha(),
             pub.getTitulo(),
-            pub.getMaterias()
+            pub.getMaterias(), pub.getArchivo()
         );
     }
 
@@ -71,4 +98,24 @@ public class PublicacionService {
 
         return PublicacionDao.actualizar(pub);
     }
+
+    public static List<PublicacionDTO> obtenerPorIdDeUsuario(Long idUsuario) {
+        List<Publicacion> publicaciones = PublicacionDao.buscarPorPublicadorId(idUsuario);
+
+        return publicaciones.stream()
+                .map(pub -> {
+                    Estudiante est = pub.getPublicador();
+                    EstudianteDTO estDto = new EstudianteDTO(est.getId(), est.getNombre(), est.getCorreo());
+                    return new PublicacionDTO(
+                            pub.getId(),
+                            estDto,
+                            pub.getFecha(),
+                            pub.getTitulo(),
+                            pub.getMaterias(),
+                            pub.getArchivo()
+                    );
+                })
+                .collect(Collectors.toList());
+    }
+
 }

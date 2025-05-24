@@ -8,6 +8,21 @@ import java.util.List;
 
 public class PublicacionDao {
 
+    public static List<Publicacion> buscarPorPublicadorId(Long publicadorId) {
+        EntityManager manager = HibernateConfig.getEntityManager();
+        try {
+            TypedQuery<Publicacion> query = manager.createQuery(
+                    "SELECT p FROM Publicacion p WHERE p.publicador.id = :publicadorId", Publicacion.class);
+            query.setParameter("publicadorId", publicadorId);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return List.of();
+        }finally {
+            HibernateConfig.closeEntityManager();
+        }
+    }
+
     // Crear una publicación
     public static boolean crear(Publicacion publicacion) {
         EntityManager manager = HibernateConfig.getEntityManager();
