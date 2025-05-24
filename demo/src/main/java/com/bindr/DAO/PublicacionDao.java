@@ -8,8 +8,6 @@ import java.util.List;
 
 public class PublicacionDao {
 
-    private static EntityManager manager = HibernateConfig.getEntityManager();
-
     // Crear una publicación
     public static boolean crear(Publicacion publicacion) {
         EntityManager manager = HibernateConfig.getEntityManager();
@@ -19,7 +17,7 @@ public class PublicacionDao {
             manager.getTransaction().commit();
             return true;
         } catch (Exception e) {
-            rollbackTransaction();
+            rollbackTransaction(manager);
             e.printStackTrace();
             return false;
         } finally {
@@ -47,7 +45,7 @@ public class PublicacionDao {
             manager.getTransaction().commit();
             return true;
         } catch (Exception e) {
-            rollbackTransaction();
+            rollbackTransaction(manager);
             e.printStackTrace();
             return false;
         } finally {
@@ -67,7 +65,7 @@ public class PublicacionDao {
             manager.getTransaction().commit();
             return true;
         } catch (Exception e) {
-            rollbackTransaction();
+            rollbackTransaction(manager);
             e.printStackTrace();
             return false;
         } finally {
@@ -89,9 +87,10 @@ public class PublicacionDao {
     }
 
     // ---- Método auxiliar ----
-    private static void rollbackTransaction() {
-        if (manager.getTransaction().isActive()) {
+    private static void rollbackTransaction(EntityManager manager) {
+        if (manager != null && manager.getTransaction().isActive()) {
             manager.getTransaction().rollback();
         }
     }
 }
+
