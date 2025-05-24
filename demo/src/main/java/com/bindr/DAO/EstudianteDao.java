@@ -5,15 +5,15 @@ import java.util.List;
 import com.bindr.modelos.Estudiante;
 import com.bindr.persistencia.HibernateConfig;
 
-import jakarta.persistence.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 
 
 public class EstudianteDao {
-    
-    private static EntityManager manager = HibernateConfig.getEntityManager();
-
     // Crear
     public static boolean crearEstudiante(Estudiante est) {
+        EntityManager manager = HibernateConfig.getEntityManager();
         try {
             manager.getTransaction().begin();
             manager.persist(est);
@@ -23,21 +23,27 @@ public class EstudianteDao {
             rollbackTransaction();
             e.printStackTrace();
             return false;
+        }finally{
+            HibernateConfig.closeEntityManager();
         }
     }
 
     // Buscar por ID
     public static Estudiante buscarPorId(Long id) {
+        EntityManager manager = HibernateConfig.getEntityManager();
         try {
             return manager.find(Estudiante.class, id);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }finally{
+            HibernateConfig.closeEntityManager();
         }
     }
 
     // Buscar por email (unique)
     public static Estudiante buscarPorEmail(String email) {
+        EntityManager manager = HibernateConfig.getEntityManager();
         try {
             TypedQuery<Estudiante> query = manager.createQuery(
                 "SELECT e FROM Estudiante e WHERE e.correo = :email", Estudiante.class);
@@ -48,11 +54,14 @@ public class EstudianteDao {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }finally{
+            HibernateConfig.closeEntityManager();
         }
     }
 
     // Actualizar
     public static boolean actualizarEstudiante(Estudiante est) {
+        EntityManager manager = HibernateConfig.getEntityManager();
         try {
             manager.getTransaction().begin();
             manager.merge(est);
@@ -62,11 +71,14 @@ public class EstudianteDao {
             rollbackTransaction();
             e.printStackTrace();
             return false;
+        }finally{
+            HibernateConfig.closeEntityManager();
         }
     }
 
     // Eliminar
     public static boolean eliminarEstudiante(Long id) {
+        EntityManager manager = HibernateConfig.getEntityManager();
         try {
             manager.getTransaction().begin();
             Estudiante est = manager.find(Estudiante.class, id);
@@ -79,11 +91,14 @@ public class EstudianteDao {
             rollbackTransaction();
             e.printStackTrace();
             return false;
+        }finally{
+            HibernateConfig.closeEntityManager();
         }
     }
 
     // Listar todos
     public static List<Estudiante> listarTodos() {
+        EntityManager manager = HibernateConfig.getEntityManager();
         try {
             TypedQuery<Estudiante> query = manager.createQuery(
                 "SELECT e FROM Estudiante e", Estudiante.class);
@@ -91,11 +106,14 @@ public class EstudianteDao {
         } catch (Exception e) {
             e.printStackTrace();
             return List.of(); // Lista vacía si hay error
+        }finally{
+            HibernateConfig.closeEntityManager();
         }
     }
 
     // ---- Métodos auxiliares ----
     private static void rollbackTransaction() {
+        EntityManager manager = HibernateConfig.getEntityManager();
         if (manager.getTransaction().isActive()) {
             manager.getTransaction().rollback();
         }
