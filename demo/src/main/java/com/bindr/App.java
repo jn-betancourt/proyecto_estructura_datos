@@ -2,10 +2,8 @@ package com.bindr;
 
 import java.io.IOException;
 
-import com.bindr.dto.RegistroRequestDTO;
-import com.bindr.persistencia.HibernateConfig;
-import com.bindr.servicios.AutenticacionService;
 
+import com.bindr.persistencia.HibernateConfig;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
