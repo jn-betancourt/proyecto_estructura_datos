@@ -1,14 +1,17 @@
 package com.bindr.modelos;
 
+import java.io.File;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Publicacion {
     private Integer id;
-    private Estudiante publicador;
-    private LocalDateTime fecha;
+    private Estudiante Publicador;
+    private LocalDate fecha;
     private String titulo;
+    private File archivo;
     private String cuerpo;
     private List<MateriaEstudio> materias;
 
@@ -25,18 +28,18 @@ public class Publicacion {
     }
 
     public Estudiante getPublicador() {
-        return publicador;
+        return Publicador;
     }
 
     public void setPublicador(Estudiante publicador) {
-        this.publicador = publicador;
+        this.Publicador = publicador;
     }
 
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -46,6 +49,14 @@ public class Publicacion {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public File getArchivo() {
+        return archivo;
+    }
+
+    public void setArchivo(File Archivo) {
+        this.archivo = Archivo;
     }
 
     public String getCuerpo() {
@@ -112,7 +123,7 @@ public class Publicacion {
             Publicacion publicacion = new Publicacion();
             publicacion.setId(id);
             publicacion.setPublicador(publicador);
-            publicacion.setFecha(fecha);
+            publicacion.setFecha(fecha.toLocalDate());
             publicacion.setTitulo(titulo);
             publicacion.setCuerpo(cuerpo);
             publicacion.setMaterias(materias);

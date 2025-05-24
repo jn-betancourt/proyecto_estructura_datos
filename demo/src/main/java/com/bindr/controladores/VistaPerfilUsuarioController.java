@@ -1,5 +1,6 @@
 package com.bindr.controladores;
 
+import com.bindr.modelos.Publicacion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,13 +8,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.shape.Path;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+
 
 public class VistaPerfilUsuarioController {
 
@@ -68,8 +68,16 @@ public class VistaPerfilUsuarioController {
         nombreUsuario.setText(nombre);
 
     }
+    private VistaPublicacionescontroller publicacionesController;
 
+    public void setPublicacionesController(VistaPublicacionescontroller publicacionesController) {
+        this.publicacionesController = publicacionesController;
+    }
 
+    public void subirPublicacion() {
+        Publicacion nueva = new Publicacion();
+        publicacionesController.agregarPublicacion(nueva);
+    }
 
     @FXML
     void guardar(ActionEvent event) {
@@ -172,31 +180,6 @@ public class VistaPerfilUsuarioController {
 
     @FXML
     private void publicar() {
-        // Validación básica
-        if (labelTituloContenido.getText().isEmpty() ||
-                labelAutor.getText().isEmpty() ||
-                labelTema.getText().isEmpty() ||
-                date.getValue() == null) {
-
-            mostrarAlerta("Error", "Todos los campos son obligatorios");
-            return;
-        }
-
-        if (archivoSeleccionado == null) {
-            mostrarAlerta("Error", "Debes seleccionar un archivo primero");
-            return;
-        }
-
-        // Aquí iría la lógica para guardar en tu sistema
-        String resumen = "Publicación creada:\n" +
-                "Título: " + labelTituloContenido.getText() + "\n" +
-                "Autor: " + labelAutor.getText() + "\n" +
-                "Tema: " + labelTema.getText() + "\n" +
-                "Fecha: " + date.getValue() + "\n" +
-                "Archivo: " + archivoSeleccionado.getName();
-
-        mostrarAlerta("Publicación Exitosa", resumen);
-        limpiarCampos();
     }
 
     private void limpiarCampos() {
