@@ -23,7 +23,7 @@ public class Estudiante {
     @Column(name = "contraseña", nullable = false, length = 64)
     private String contraseña;
 
-      @ManyToMany(mappedBy = "participantes")
+    @ManyToMany(mappedBy = "participantes")
     private List<Conversacion> conversaciones;
 
     public Estudiante() {

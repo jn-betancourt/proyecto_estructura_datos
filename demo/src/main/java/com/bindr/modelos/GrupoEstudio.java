@@ -2,15 +2,36 @@ package com.bindr.modelos;
 
 import java.util.*;
 
+import com.bindr.converters.MateriaEnumListConverter;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "grupos_de_estudio")
 public class GrupoEstudio {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
-    private MateriaEstudio materia;
+
+    @Convert(converter = MateriaEnumListConverter.class)
+    @Column(columnDefinition = "TEXT") // opcional, si la lista es larga
+    private List<MateriaEstudio> materia;
+
+    @OneToOne
+    @JoinColumn(name = "conversacion_id")
     private Conversacion conversacion;
+
+    @ManyToMany
+    @JoinTable(
+        name = "grupo_estudiante",
+        joinColumns = @JoinColumn(name = "grupo_id"),
+        inverseJoinColumns = @JoinColumn(name = "estudiante_id")
+    )
     private List<Estudiante> estudiantes;
 
     public GrupoEstudio() {
@@ -33,11 +54,11 @@ public class GrupoEstudio {
         this.nombre = nombre;
     }
 
-    public MateriaEstudio getMateria() {
+    public List<MateriaEstudio> getMateria() {
         return materia;
     }
 
-    public void setMateria(MateriaEstudio materia) {
+    public void setMateria(List<MateriaEstudio> materia) {
         this.materia = materia;
     }
 
@@ -70,7 +91,7 @@ public class GrupoEstudio {
     public static class Builder {
         private Integer id;
         private String nombre;
-        private MateriaEstudio materia;
+        private List<MateriaEstudio> materia;
         private Conversacion conversacion;
         private List<Estudiante> estudiantes = new ArrayList<>();
 
@@ -84,7 +105,7 @@ public class GrupoEstudio {
             return this;
         }
 
-        public Builder materia(MateriaEstudio materia) {
+        public Builder materia(List<MateriaEstudio> materia) {
             this.materia = materia;
             return this;
         }
