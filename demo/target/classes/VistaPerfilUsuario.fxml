@@ -12,23 +12,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bindr.controladores.VistaPerfilUsuarioController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bindr.controladores.VistaPerfilUsuarioController">
    <children>
       <BorderPane prefHeight="508.0" prefWidth="619.0">
          <top>
             <HBox prefHeight="23.0" prefWidth="619.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#irAInicio" prefHeight="25.0" prefWidth="64.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" text="Atrás">
+                  <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#irAInicio" prefHeight="14.0" prefWidth="64.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" styleClass="button-secondary" stylesheets="@styles/styles.css" text="Atrás">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Label prefHeight="25.0" prefWidth="39.0" text="Perfil">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="nombreUsuario" prefHeight="26.0" prefWidth="37.0" text="User">
+                  <Label prefHeight="35.0" prefWidth="55.0" text="Perfil">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -57,14 +52,14 @@
                         <Insets left="40.0" top="50.0" />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="btnPublicaciones" mnemonicParsing="false" onAction="#irAPublicaciones" prefHeight="25.0" prefWidth="88.0" style="-fx-background-radius: 10; -fx-border-radius: 20; -fx-background-color: #ff9f19;" text="Publicaciones">
+                  <Button fx:id="btnPublicaciones" mnemonicParsing="false" onAction="#irAPublicaciones" prefHeight="33.0" prefWidth="109.0" style="-fx-background-radius: 10; -fx-border-radius: 20; -fx-background-color: #ff9f19;" styleClass="button-primary" stylesheets="@styles/styles.css" text="Publicaciones">
                      <VBox.margin>
-                        <Insets left="30.0" top="20.0" />
+                        <Insets left="20.0" top="20.0" />
                      </VBox.margin>
                   </Button>
                   <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="23.0" prefWidth="118.0" style="-fx-background-color: #ca0b0b; -fx-text-fill: #ffffff; -fx-background-radius: 10; -fx-border-color: #ffffff; -fx-border-radius: 10;" text="Cerrar Sesión" textAlignment="CENTER">
                      <VBox.margin>
-                        <Insets left="20.0" top="190.0" />
+                        <Insets left="20.0" top="160.0" />
                      </VBox.margin>
                   </Button>
                </children>
@@ -111,7 +106,7 @@
                         <TextField fx:id="labelInstitucion" prefHeight="39.0" prefWidth="232.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 20; -fx-border-radius: 20;" />
                      </children>
                   </HBox>
-                  <Button fx:id="btnGuardarPerfil" mnemonicParsing="false" onAction="#guardar" prefHeight="35.0" prefWidth="73.0" style="-fx-background-radius: 10; -fx-border-radius: 20; -fx-background-color: #ff9f19;" text="Guardar">
+                  <Button fx:id="btnGuardarPerfil" mnemonicParsing="false" onAction="#guardar" prefHeight="33.0" prefWidth="85.0" style="-fx-background-radius: 10; -fx-border-radius: 20; -fx-background-color: #ff9f19;" styleClass="button-secondary" stylesheets="@styles/styles.css" text="Guardar">
                      <VBox.margin>
                         <Insets left="10.0" />
                      </VBox.margin>
@@ -179,9 +174,9 @@
                                     <Insets left="10.0" top="5.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="btnPublicar" mnemonicParsing="false" onAction="#publicar" prefHeight="25.0" prefWidth="85.0" style="-fx-background-radius: 10; -fx-border-radius: 20; -fx-background-color: #ff9f19;" text="Publicar">
+                              <Button fx:id="btnPublicar" mnemonicParsing="false" onAction="#publicar" prefHeight="25.0" prefWidth="85.0" style="-fx-background-radius: 10; -fx-border-radius: 20; -fx-background-color: #ff9f19;" styleClass="button-secondary" stylesheets="@styles/styles.css" text="Publicar">
                                  <VBox.margin>
-                                    <Insets bottom="5.0" left="210.0" top="5.0" />
+                                    <Insets left="200.0" />
                                  </VBox.margin>
                               </Button>
                            </children>
