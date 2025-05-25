@@ -16,6 +16,12 @@ import java.util.stream.Collectors;
 
 public class MensajeService {
 
+    public static List<ConversacionDTO> obtenerConversacionesPorUsuario(Long id) {
+        List<Conversacion> conversaciones = ConversacionDao.obtenerPorUsuarioId(id);
+        return conversaciones.stream()
+                .map(ConversacionDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
     // Crear una nueva conversación
     public static ConversacionDTO crearConversacion(List<String> correosParticipantes, boolean esGrupo) {
         List<Estudiante> participantes = correosParticipantes.stream()
@@ -79,7 +85,7 @@ public class MensajeService {
                             .map(e -> new EstudianteDTO(e.getId(), e.getNombre(), e.getCorreo()))
                             .orElse(null);
                     return new MensajeDTO(autorDTO, m.getContenido(), m.getFecha());
-                }).collect(Collectors.toList());
+                }). collect(Collectors.toList());
 
         return new ConversacionDTO(
                 conversacion.getId(),

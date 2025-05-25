@@ -40,7 +40,7 @@ public class Conversacion {
     private List<Mensaje> mensajes;
 
     // Constructor privado para uso exclusivo del builder
-    private Conversacion() {
+    public Conversacion() {
         this.participantes = new ArrayList<>();
     }
 

@@ -21,7 +21,27 @@ public class ConversacionDao {
             .registerModule(new JavaTimeModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
+    public static List<Conversacion> obtenerPorUsuarioId(Long usuarioId) {
+        EntityManager manager = HibernateConfig.getEntityManager();
+        try {
+            TypedQuery<Conversacion> query = manager.createQuery(
+                    "SELECT c FROM Conversacion c JOIN c.participantes p WHERE p.id = :usuarioId",
+                    Conversacion.class
+            );
+            query.setParameter("usuarioId", usuarioId);
+            List<Conversacion> conversaciones = query.getResultList();
 
+            // Deserializar mensajes en cada conversación
+            conversaciones.forEach(ConversacionDao::deserializarMensajes);
+
+            return conversaciones;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return List.of();
+        } finally {
+            HibernateConfig.closeEntityManager();
+        }
+    }
 
     public static Conversacion buscarPorId(Long id) {
         EntityManager manager = HibernateConfig.getEntityManager();

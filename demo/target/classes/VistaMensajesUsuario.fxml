@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -13,13 +12,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bindr.controladores.VistaMensajesUsuarioController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" styleClass="card-mini" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bindr.controladores.VistaMensajesUsuarioController">
    <children>
       <BorderPane layoutY="-1.0" prefHeight="500.0" prefWidth="600.0">
          <top>
             <HBox prefHeight="36.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#irAInicio" prefHeight="34.0" prefWidth="55.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" text="Atrás" />
+                  <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#irAInicio" prefHeight="34.0" prefWidth="70.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" stylesheets="@styles/styles.css" text="Atrás">
+                     <styleClass>
+                        <String fx:value="button-primary" />
+                        <String fx:value="card-mini" />
+                     </styleClass></Button>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Chats" wrappingWidth="85.98306465148926">
                      <font>
                         <Font size="25.0" />
@@ -36,22 +39,27 @@
                         <Insets bottom="6.0" left="10.0" right="10.0" top="6.0" />
                      </padding>
                   </TextField>
-                  <Button fx:id="btnBuscar" mnemonicParsing="false" prefHeight="34.0" prefWidth="71.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" text="Buscar">
+                  <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscar" prefHeight="34.0" prefWidth="71.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" stylesheets="@styles/styles.css" text="Buscar">
                      <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets right="10.0" />
                      </HBox.margin>
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
+                     <styleClass>
+                        <String fx:value="button-primary" />
+                        <String fx:value="card-mini" />
+                     </styleClass>
                   </Button>
-                  <ImageView fx:id="ImageUser" fitHeight="36.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets left="90.0" />
-                     </HBox.margin>
-                     <image>
-                        <Image url="@imagenes/perfil.png" />
-                     </image>
-                  </ImageView>
+                  <Button fx:id="btnResultadoBusqueda" mnemonicParsing="false" onAction="#iniciarChat" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10;" stylesheets="@styles/styles.css">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <styleClass>
+                        <String fx:value="button-primary" />
+                        <String fx:value="card-mini" />
+                     </styleClass>
+                  </Button>
                </children>
             </HBox>
          </top>
@@ -69,7 +77,11 @@
                                           <Insets left="10.0" />
                                        </padding>
                                        <children>
-                                          <Button fx:id="btnUsuario1" mnemonicParsing="false" onAction="#abrirChat" prefHeight="64.0" prefWidth="155.0" text="Usuario1" />
+                                          <Button fx:id="btnUsuario1" mnemonicParsing="false" onAction="#abrirChat" prefHeight="64.0" prefWidth="155.0" text="Usuario1">
+                                             <styleClass>
+                                                <String fx:value="button-secondary" />
+                                                <String fx:value="card-mini" />
+                                             </styleClass></Button>
                                        </children>
                                     </HBox>
                                  </children>
@@ -81,7 +93,11 @@
                                           <Insets left="10.0" />
                                        </padding>
                                        <children>
-                                          <Button fx:id="btnUsuario2" mnemonicParsing="false" onAction="#abrirChat" prefHeight="60.0" prefWidth="155.0" text="Usuario2" />
+                                          <Button fx:id="btnUsuario2" mnemonicParsing="false" onAction="#abrirChat" prefHeight="60.0" prefWidth="155.0" stylesheets="@styles/styles.css" text="Usuario2">
+                                             <styleClass>
+                                                <String fx:value="card-mini" />
+                                                <String fx:value="button-secondary" />
+                                             </styleClass></Button>
                                        </children>
                                     </HBox>
                                  </children>
@@ -93,7 +109,11 @@
                                           <Insets left="10.0" right="10.0" />
                                        </padding>
                                        <children>
-                                          <Button fx:id="btnUsuario3" mnemonicParsing="false" onAction="#abrirChat" prefHeight="61.0" prefWidth="155.0" text="Usuario3" />
+                                          <Button fx:id="btnUsuario3" mnemonicParsing="false" onAction="#abrirChat" prefHeight="61.0" prefWidth="155.0" text="Usuario3">
+                                             <styleClass>
+                                                <String fx:value="card-mini" />
+                                                <String fx:value="button-secondary" />
+                                             </styleClass></Button>
                                        </children>
                                     </HBox>
                                  </children>
@@ -105,7 +125,11 @@
                                           <Insets left="10.0" />
                                        </padding>
                                        <children>
-                                          <Button fx:id="btnUsuario4" mnemonicParsing="false" onAction="#abrirChat" prefHeight="64.0" prefWidth="155.0" text="Usuario4" />
+                                          <Button fx:id="btnUsuario4" mnemonicParsing="false" onAction="#abrirChat" prefHeight="64.0" prefWidth="155.0" text="Usuario4">
+                                             <styleClass>
+                                                <String fx:value="button-secondary" />
+                                                <String fx:value="card-mini" />
+                                             </styleClass></Button>
                                        </children>
                                     </HBox>
                                  </children>
@@ -117,7 +141,11 @@
                                           <Insets left="10.0" />
                                        </padding>
                                        <children>
-                                          <Button fx:id="btnUsuario5" mnemonicParsing="false" onAction="#abrirChat" prefHeight="71.0" prefWidth="155.0" text="Usuario5" />
+                                          <Button fx:id="btnUsuario5" mnemonicParsing="false" onAction="#abrirChat" prefHeight="71.0" prefWidth="155.0" text="Usuario5">
+                                             <styleClass>
+                                                <String fx:value="button-secondary" />
+                                                <String fx:value="card-mini" />
+                                             </styleClass></Button>
                                        </children>
                                     </HBox>
                                  </children>
@@ -126,7 +154,11 @@
                                  <children>
                                     <HBox prefHeight="55.0" prefWidth="143.0">
                                        <children>
-                                          <Button fx:id="btnUsuario6" mnemonicParsing="false" onAction="#abrirChat" prefHeight="64.0" prefWidth="155.0" text="Usuario6" />
+                                          <Button fx:id="btnUsuario6" mnemonicParsing="false" onAction="#abrirChat" prefHeight="64.0" prefWidth="155.0" text="Usuario6">
+                                             <styleClass>
+                                                <String fx:value="card-mini" />
+                                                <String fx:value="button-secondary" />
+                                             </styleClass></Button>
                                        </children>
                                        <padding>
                                           <Insets left="10.0" />
@@ -141,7 +173,11 @@
                                           <Insets left="10.0" />
                                        </padding>
                                        <children>
-                                          <Button fx:id="btnUsuario7" mnemonicParsing="false" onAction="#abrirChat" prefHeight="68.0" prefWidth="155.0" text="Usuario7" />
+                                          <Button fx:id="btnUsuario7" mnemonicParsing="false" onAction="#abrirChat" prefHeight="68.0" prefWidth="155.0" text="Usuario7">
+                                             <styleClass>
+                                                <String fx:value="button-secondary" />
+                                                <String fx:value="card-mini" />
+                                             </styleClass></Button>
                                        </children>
                                     </HBox>
                                  </children>
@@ -156,20 +192,30 @@
          <center>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <ScrollPane prefHeight="464.0" prefWidth="375.0">
+                  <ScrollPane prefHeight="425.0" prefWidth="416.0">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="464.0" prefWidth="402.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="424.0" prefWidth="409.0">
                            <children>
-                              <TextField fx:id="textFieldEscribirMensaje" layoutY="414.0" prefHeight="36.0" prefWidth="330.0" promptText="Escribe un mensaje" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #f0f0f0;">
-                                 <padding>
-                                    <Insets bottom="6.0" left="10.0" right="10.0" top="6.0" />
-                                 </padding>
-                              </TextField>
-                              <Button layoutX="330.0" layoutY="417.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="66.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" text="&gt;&gt;" />
+                              <VBox fx:id="mensajesVbox" prefHeight="409.0" prefWidth="401.0" />
                            </children>
                         </AnchorPane>
                     </content>
                   </ScrollPane>
+                  <HBox prefHeight="37.0" prefWidth="416.0">
+                     <children>
+                        <TextField fx:id="textFieldEscribirMensaje" prefHeight="34.0" prefWidth="344.0" promptText="Escribe un mensaje" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #f0f0f0;">
+                           <padding>
+                              <Insets bottom="6.0" left="10.0" right="10.0" top="6.0" />
+                           </padding>
+                        </TextField>
+                        <Button fx:id="btnEnviar" mnemonicParsing="false" onAction="#enviarMensaje" prefHeight="31.0" prefWidth="66.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" stylesheets="@styles/styles.css" text="&gt;&gt;">
+                           <styleClass>
+                              <String fx:value="button-primary" />
+                              <String fx:value="card-mini" />
+                           </styleClass>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </center>
