@@ -1,7 +1,6 @@
 package com.bindr.controladores;
 
 import com.bindr.EntornoData;
-import com.bindr.dao.PublicacionDao;
 import com.bindr.dto.PublicacionDTO;
 import com.bindr.modelos.MateriaEstudio;
 import com.bindr.modelos.Publicacion;
@@ -21,7 +20,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
