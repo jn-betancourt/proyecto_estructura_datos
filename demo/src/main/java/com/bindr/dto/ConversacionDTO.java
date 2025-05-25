@@ -18,9 +18,6 @@ public record ConversacionDTO(
     List<EstudianteDTO> participantes,
     List<MensajeDTO> mensajes,
     boolean esGrupo
-<<<<<<< HEAD:demo/src/main/java/com/bindr/dto/ConversacionDTO.java
-) {
-=======
 )
 {
     public static ConversacionDTO fromEntity(Conversacion conversacion) {
@@ -78,6 +75,4 @@ public record ConversacionDTO(
 
         return conversacion;
     }
-
->>>>>>> 748b2c744dc66ef0f4cd09ddbdaad05c668e4b13:demo/src/main/java/com/bindr/DTO/ConversacionDTO.java
 }

@@ -1,0 +1,44 @@
+.card-mini {
+    -fx-background-color: #f7f7f7;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #e1e4e8;
+    -fx-border-width: 1;
+    -fx-padding: 12;
+    -fx-spacing: 6;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 2);
+}
+
+.card-mini:hover {
+    -fx-background-color: #eaeaea;
+    -fx-cursor:hand;
+}
+
+.button-primary {
+    -fx-background-color: #feb622; /* Tu color amarillo */
+    -fx-text-fill: #000000; /* Texto negro para mejor contraste */
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-width: 0;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 1);
+    -fx-font-size: 14px;
+}
+
+.button-primary:hover {
+    -fx-background-color: #e6a41e; /* Versión más oscura para hover */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0, 0, 2);
+}
+
+.button-primary:pressed {
+    -fx-background-color: #d3941a;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1);
+}
+
+.button-primary, .button-secondary {
+    -fx-font-size: 12px; /* Tamaño reducido para botones */
+    -fx-padding: 8 16; /* Padding ajustado al nuevo tamaño */
+}
