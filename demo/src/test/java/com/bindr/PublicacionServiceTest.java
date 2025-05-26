@@ -31,6 +31,7 @@ public class PublicacionServiceTest {
                 null,
                 "Título de prueba",
                 List.of(MateriaEstudio.BIOLOGIA),
+                List.of(),
                 null
         );
         boolean creada = PublicacionService.crearPublicacion(publicacion);
@@ -44,6 +45,8 @@ public class PublicacionServiceTest {
                 .findFirst()
                 .orElse(null);
         Assertions.assertNotNull(encontrada);
+
+        System.out.println(encontrada);
 
         // Eliminar publicación
         boolean eliminada = PublicacionService.eliminar(encontrada.id());

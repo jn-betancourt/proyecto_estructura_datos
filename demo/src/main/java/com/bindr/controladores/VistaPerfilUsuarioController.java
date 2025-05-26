@@ -120,6 +120,13 @@ public class VistaPerfilUsuarioController {
                     LocalDateTime.now(), // Fecha actual
                     labelTituloContenido.getText().trim(), // Título del TextField
                     List.of(MateriaEstudio.valueOf(desplegableMaterias.getValue())), // Materia del ComboBox
+
+
+                    //==============================================================================
+                    List.of(), // Valoraciones vacías por ahora ESTO ES LO QUE HAY QUE MODIFICAR 
+                    //==============================================================================
+
+
                     archivoSeleccionado.getName() // Nombre del archivo
             );
 
@@ -167,6 +174,13 @@ public class VistaPerfilUsuarioController {
                 LocalDateTime.now(),
                 labelTituloContenido.getText().trim(),
                 List.of(materia),
+
+
+                //==============================================================================
+                    List.of(), // Valoraciones vacías por ahora ESTO ES LO QUE HAY QUE MODIFICAR 
+                //==============================================================================
+
+                
                 archivoSeleccionado.getName()
         );
     }

@@ -42,6 +42,18 @@ public class EstudianteService {
             .collect(Collectors.toList());
     }
 
+    public List<EstudianteDTO> listarEstudiantes() {
+        return EstudianteDao.listarTodos().stream()
+            .map(EstudianteDTO::fromEntity)
+            .collect(Collectors.toList());
+    }
+
+    public boolean eliminarEstudiante(Long id) {
+        Estudiante estudiante = EstudianteDao.buscarPorId(id);
+        if (estudiante == null) return false;
+        return EstudianteDao.eliminarEstudiante(estudiante.getId());
+    }
+
     // Obtener conversaciones del estudiante
     public List<ConversacionDTO> obtenerConversaciones(Long estudianteId) {
         Estudiante estudiante = EstudianteDao.buscarPorId(estudianteId);

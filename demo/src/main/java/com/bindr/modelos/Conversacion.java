@@ -100,30 +100,30 @@ public class Conversacion {
 
     // --- Métodos utilitarios ---
 
-    public void deserializarMensajes() {
-        if (mensajesJson != null && !mensajesJson.isBlank()) {
-            try {
-                ObjectMapper mapper = new ObjectMapper();
-                this.mensajes = mapper.readValue(mensajesJson, new TypeReference<List<Mensaje>>() {});
-            } catch (IOException e) {
-                this.mensajes = new ArrayList<>();
-                e.printStackTrace();
-            }
-        } else {
-            this.mensajes = new ArrayList<>();
-        }
-    }
+    // public void deserializarMensajes() {
+    //     if (mensajesJson != null && !mensajesJson.isBlank()) {
+    //         try {
+    //             ObjectMapper mapper = new ObjectMapper();
+    //             this.mensajes = mapper.readValue(mensajesJson, new TypeReference<List<Mensaje>>() {});
+    //         } catch (IOException e) {
+    //             this.mensajes = new ArrayList<>();
+    //             e.printStackTrace();
+    //         }
+    //     } else {
+    //         this.mensajes = new ArrayList<>();
+    //     }
+    // }
 
-    public void serializarMensajes() {
-        if (mensajes != null && !mensajes.isEmpty()) {
-            try {
-                ObjectMapper mapper = new ObjectMapper();
-                this.mensajesJson = mapper.writeValueAsString(mensajes);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    // public void serializarMensajes() {
+    //     if (mensajes != null && !mensajes.isEmpty()) {
+    //         try {
+    //             ObjectMapper mapper = new ObjectMapper();
+    //             this.mensajesJson = mapper.writeValueAsString(mensajes);
+    //         } catch (IOException e) {
+    //             e.printStackTrace();
+    //         }
+    //     }
+    // }
 
     public void agregarParticipante(Estudiante estudiante) {
         if (!participantes.contains(estudiante)) {
@@ -177,7 +177,7 @@ public class Conversacion {
             conversacion.setMensajes(mensajes);
 
             // Serializa los mensajes a JSON para guardar en DB si es necesario
-            conversacion.serializarMensajes();
+            // conversacion.serializarMensajes();
 
             return conversacion;
         }

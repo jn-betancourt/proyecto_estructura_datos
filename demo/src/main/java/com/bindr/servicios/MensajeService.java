@@ -71,6 +71,12 @@ public class MensajeService {
         return toDTO(conversacion);
     }
 
+    public static boolean eliminarConversacion(Long id) {
+        Conversacion conversacion = ConversacionDao.obtenerPorId(id);
+        if (conversacion == null) return false;
+        return ConversacionDao.eliminarConversacion(conversacion.getId());
+    }
+
     // ---- Conversión a DTOs ----
     private static ConversacionDTO toDTO(Conversacion conversacion) {
         List<EstudianteDTO> participantes = conversacion.getParticipantes().stream()

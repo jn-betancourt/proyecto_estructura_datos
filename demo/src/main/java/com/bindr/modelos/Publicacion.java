@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bindr.converters.MateriaEnumListConverter;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.persistence.*;
 
@@ -32,6 +34,13 @@ public class Publicacion {
     @Convert(converter = MateriaEnumListConverter.class)
     @Column(columnDefinition = "TEXT") // opcional, si la lista es larga
     private List<MateriaEstudio> materias = new ArrayList<>();
+
+    @Transient
+    private List<Valoracion> valoraciones = new ArrayList<>();
+
+    @Lob
+    @Column(name = "valoraciones_json")
+    private String valoracionesJson;
 
     public Publicacion() {
         this.materias = new ArrayList<>();
@@ -89,12 +98,56 @@ public class Publicacion {
         }
     }
 
+     // Métodos para serializar/deserializar valoraciones
+    // public void serializarValoraciones() {
+    //     if (valoraciones != null) {
+    //         try {
+    //             ObjectMapper mapper = new ObjectMapper();
+    //             this.valoracionesJson = mapper.writeValueAsString(valoraciones);
+    //         } catch (Exception e) {
+    //             e.printStackTrace();
+    //         }
+    //     }
+    // }
+
+    // public void deserializarValoraciones() {
+    //     if (valoracionesJson != null && !valoracionesJson.isBlank()) {
+    //         try {
+    //             ObjectMapper mapper = new ObjectMapper();
+    //             this.valoraciones = mapper.readValue(valoracionesJson, new TypeReference<List<Valoracion>>() {});
+    //         } catch (Exception e) {
+    //             this.valoraciones = new ArrayList<>();
+    //             e.printStackTrace();
+    //         }
+    //     } else {
+    //         this.valoraciones = new ArrayList<>();
+    //     }
+    // }
+
+    public List<Valoracion> getValoraciones() {
+        return valoraciones;
+    }
+
+    public void setValoraciones(List<Valoracion> valoraciones) {
+        this.valoraciones = valoraciones;
+        System.out.println("Valoraciones establecidas: " + valoraciones.size());
+        System.out.println(valoracionesJson);
+    }
+
+    public String getValoracionesJson() {
+        return valoracionesJson;
+    }
+    public void setValoracionesJson(String valoracionesJson) {
+        this.valoracionesJson = valoracionesJson;
+    }   
+
     public static class Builder {
         private Long id;
         private Estudiante publicador;
         private LocalDateTime fecha;
         private String archivo;
         private String titulo;
+        private List<Valoracion> valoraciones = new ArrayList<>();
         private List<MateriaEstudio> materias = new ArrayList<>();
 
         public Builder id(Long id) {
@@ -112,7 +165,7 @@ public class Publicacion {
             return this;
         }
 
-        private Builder archivo(String archivo) {
+        public Builder archivo(String archivo) {
             this.archivo = archivo;
             return this;
         }
@@ -127,6 +180,14 @@ public class Publicacion {
             return this;
         }
 
+        public Builder valoraciones(List<Valoracion> valoraciones) {
+            if (valoraciones != null) {
+                this.valoraciones = valoraciones;
+            }
+            return this;
+
+        }
+
         public Publicacion build() {
             Publicacion publicacion = new Publicacion();
             publicacion.setId(id);
@@ -135,6 +196,7 @@ public class Publicacion {
             publicacion.setArchivo(archivo);
             publicacion.setTitulo(titulo);
             publicacion.setMaterias(materias);
+            publicacion.setValoraciones(valoraciones);
             return publicacion;
         }
     }

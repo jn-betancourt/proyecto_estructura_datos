@@ -11,9 +11,10 @@ import com.bindr.dao.EstudianteDao;
 import com.bindr.dao.PublicacionDao;
 import com.bindr.dto.EstudianteDTO;
 import com.bindr.dto.PublicacionDTO;
+import com.bindr.dto.ValoracionDTO;
 import com.bindr.modelos.Estudiante;
-import com.bindr.modelos.MateriaEstudio;
 import com.bindr.modelos.Publicacion;
+import com.bindr.modelos.Valoracion;
 
 public class PublicacionService {
 
@@ -48,11 +49,18 @@ public class PublicacionService {
             return false;
         }
 
+        // castear DTO de valoraciones a entidades
+        List<Valoracion> valoraciones = dto.valoraciones().stream()
+                .map(ValoracionDTO::toEntity)
+                .collect(Collectors.toList());
+
         Publicacion publicacion = new Publicacion.Builder()
                 .publicador(publicador)
                 .titulo(dto.titulo())
                 .fecha(LocalDateTime.now())
                 .materias(dto.materias())
+                .valoraciones(valoraciones)
+                .archivo(dto.archivo()) // nueva propiedad
                 .build();
 
         return PublicacionDao.crear(publicacion);
@@ -79,7 +87,11 @@ public class PublicacionService {
             estDto,
             pub.getFecha(),
             pub.getTitulo(),
-            pub.getMaterias(), pub.getArchivo()
+            pub.getMaterias(),
+            pub.getValoraciones().stream()
+                .map(ValoracionDTO::fromEntity)
+                .collect(Collectors.toList()),
+            pub.getArchivo()
         );
     }
 
@@ -88,13 +100,20 @@ public class PublicacionService {
         return PublicacionDao.eliminar(id);
     }
 
+
     // Actualizar título y materias (como ejemplo)
-    public static boolean actualizarPublicacion(Long id, String nuevoTitulo, List<MateriaEstudio> nuevasMaterias) {
-        Publicacion pub = PublicacionDao.buscarPorId(id);
+    public static boolean actualizarPublicacion(PublicacionDTO dto) {
+        Publicacion pub = PublicacionDao.buscarPorId(dto.id());
         if (pub == null) return false;
 
-        pub.setTitulo(nuevoTitulo);
-        pub.setMaterias(nuevasMaterias);
+        pub.setTitulo(dto.titulo());
+        pub.setMaterias(dto.materias());
+        pub.setValoraciones(dto.valoraciones().stream()
+                .map(ValoracionDTO::toEntity)
+                .collect(Collectors.toList()));
+        pub.setArchivo(dto.archivo()); // nueva propiedad
+        pub.setFecha(LocalDateTime.now()); // actualizar fecha al momento de la edición
+
 
         return PublicacionDao.actualizar(pub);
     }
@@ -112,6 +131,9 @@ public class PublicacionService {
                             pub.getFecha(),
                             pub.getTitulo(),
                             pub.getMaterias(),
+                            pub.getValoraciones().stream()
+                                    .map(ValoracionDTO::fromEntity)
+                                    .collect(Collectors.toList()),
                             pub.getArchivo()
                     );
                 })
