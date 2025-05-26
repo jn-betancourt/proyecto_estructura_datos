@@ -2,8 +2,10 @@ package com.bindr;
 
 import java.io.IOException;
 
-
+import com.bindr.dto.ConversacionDTO;
 import com.bindr.persistencia.HibernateConfig;
+import com.bindr.servicios.MensajeService;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

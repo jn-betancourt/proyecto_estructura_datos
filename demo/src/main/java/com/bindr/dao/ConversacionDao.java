@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 import java.io.IOException;
@@ -21,27 +22,29 @@ public class ConversacionDao {
             .registerModule(new JavaTimeModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-    public static List<Conversacion> obtenerPorUsuarioId(Long usuarioId) {
-        EntityManager manager = HibernateConfig.getEntityManager();
-        try {
-            TypedQuery<Conversacion> query = manager.createQuery(
-                    "SELECT c FROM Conversacion c JOIN c.participantes p WHERE p.id = :usuarioId",
-                    Conversacion.class
-            );
-            query.setParameter("usuarioId", usuarioId);
-            List<Conversacion> conversaciones = query.getResultList();
+   public static List<Conversacion> obtenerPorUsuarioId(Long usuarioId) {
+    EntityManager manager = HibernateConfig.getEntityManager();
+    try {
+        TypedQuery<Conversacion> query = manager.createQuery(
+            "SELECT DISTINCT c FROM Conversacion c " +
+            "JOIN FETCH c.participantes p " +
+            "WHERE p.id = :usuarioId",
+            Conversacion.class
+        );
+        query.setParameter("usuarioId", usuarioId);
+        List<Conversacion> conversaciones = query.getResultList();
 
-            // Deserializar mensajes en cada conversación
-            conversaciones.forEach(ConversacionDao::deserializarMensajes);
+        // Deserializar mensajes en cada conversación
+        conversaciones.forEach(ConversacionDao::deserializarMensajes);
 
-            return conversaciones;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return List.of();
-        } finally {
-            HibernateConfig.closeEntityManager();
-        }
+        return conversaciones;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return List.of();
+    } finally {
+        HibernateConfig.closeEntityManager();
     }
+}
 
     public static Conversacion buscarPorId(Long id) {
         EntityManager manager = HibernateConfig.getEntityManager();
@@ -128,25 +131,36 @@ public class ConversacionDao {
     }
 
     // Buscar por ID
-    public static Conversacion obtenerPorId(Long id) {
-        EntityManager manager = HibernateConfig.getEntityManager();
-        try {
-            Conversacion conv = manager.find(Conversacion.class, id);
-            if (conv != null && conv.getMensajesJson() != null) {
-                List<Mensaje> mensajes = mapper.readValue(
-                    conv.getMensajesJson(),
-                    new TypeReference<List<Mensaje>>() {}
-                );
-                conv.setMensajes(mensajes);
-            }
-            return conv;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }finally{
-            HibernateConfig.closeEntityManager();
+   public static Conversacion obtenerPorId(Long id) {
+    EntityManager manager = HibernateConfig.getEntityManager();
+    try {
+        TypedQuery<Conversacion> query = manager.createQuery(
+            "SELECT c FROM Conversacion c " +
+            "JOIN FETCH c.participantes " +
+            "WHERE c.id = :id", 
+            Conversacion.class
+        );
+        query.setParameter("id", id);
+        Conversacion conv = query.getSingleResult();
+
+        if (conv.getMensajesJson() != null) {
+            List<Mensaje> mensajes = mapper.readValue(
+                conv.getMensajesJson(),
+                new TypeReference<List<Mensaje>>() {}
+            );
+            conv.setMensajes(mensajes);
         }
+
+        return conv;
+    } catch (NoResultException e) {
+        return null;
+    } catch (IOException e) {
+        e.printStackTrace();
+        return null;
+    } finally {
+        HibernateConfig.closeEntityManager();
     }
+}
 
     // Actualizar
     public static boolean actualizarConversacion(Conversacion conv) {

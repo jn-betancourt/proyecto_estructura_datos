@@ -66,6 +66,7 @@ public class MensajeService {
     // Obtener DTO de conversación por ID
     public static ConversacionDTO obtenerConversacionDTO(Long id) {
         Conversacion conversacion = ConversacionDao.obtenerPorId(id);
+        System.out.println(conversacion.getParticipantes());
         if (conversacion == null) return null;
         return toDTO(conversacion);
     }
