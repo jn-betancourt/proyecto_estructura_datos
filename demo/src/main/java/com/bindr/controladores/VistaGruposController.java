@@ -7,8 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -20,19 +20,33 @@ public class VistaGruposController {
     private Button btnAtras;
 
     @FXML
-    private Button btnBuscarGrupos;
+    private Button btnCrearGrupo;
 
     @FXML
-    private Label labelNombreUsuario;
+    private Button btnMisGrupos;
 
     @FXML
-    private TableView<?> tablaAmigos;
+    private Button btnUnirmeAGrupo;
 
     @FXML
-    private TextField textFieldBuscarGrupos;
+    private ComboBox<?> desplegableMaterias;
 
     @FXML
-    private void irAInicio(ActionEvent event) {
+    private TextField labelAutor;
+
+    @FXML
+    private TextField labelTituloContenido;
+
+    @FXML
+    private TableColumn<?, ?> tablaGruposDisponibles;
+
+    @FXML
+    void crearGrupo(ActionEvent event) {
+
+    }
+
+    @FXML
+    void irAInicio(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/VistaPrincipalUsuario.fxml"));
             Parent configView = loader.load();
@@ -47,5 +61,16 @@ public class VistaGruposController {
         }
     }
 
+    @FXML
+    void publicar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void unirmeAGrupo(ActionEvent event) {
+
+    }
+
 }
+
 
