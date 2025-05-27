@@ -1,14 +1,18 @@
 package com.bindr.servicios;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.bindr.dao.ConversacionDao;
 import com.bindr.dao.EstudianteDao;
 import com.bindr.dao.GrupoEstudioDao;
+import com.bindr.dao.PublicacionDao;
 import com.bindr.dto.GrupoEstudioDTO;
+import com.bindr.dto.PublicacionDTO;
 import com.bindr.modelos.Conversacion;
 import com.bindr.modelos.Estudiante;
 import com.bindr.modelos.GrupoEstudio;
+import com.bindr.modelos.Publicacion;
 
 /**
  * Servicio encargado de la gestión de grupos de estudio.
@@ -120,5 +124,15 @@ public class GrupoEstudioService {
 
         grupo.setConversacion(conversacion);
         return GrupoEstudioDao.actualizar(grupo);
+    }
+
+    /**
+     * Obtiene todas las publicaciones asociadas a un grupo de estudio.
+     */
+    public List<PublicacionDTO> obtenerPublicacionesDeGrupo(Long grupoId) {
+        List<Publicacion> publicaciones = PublicacionDao.buscarPorGrupoId(grupoId);
+        return publicaciones.stream()
+                .map(PublicacionDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 }

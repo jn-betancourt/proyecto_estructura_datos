@@ -10,7 +10,8 @@ public record GrupoEstudioDTO(
     String nombre,
     List<MateriaEstudio> materia,
     List<EstudianteDTO> estudiantes,
-    ConversacionDTO conversacion
+    ConversacionDTO conversacion,
+    List<PublicacionDTO> publicaciones
 ) {
 
     public static GrupoEstudioDTO fromEntity(GrupoEstudio grupo) {
@@ -22,12 +23,19 @@ public record GrupoEstudioDTO(
                 .toList()
             : List.of();
 
+        List<PublicacionDTO> publicacionesDTO = grupo.getPublicaciones() != null
+            ? grupo.getPublicaciones().stream()
+                .map(PublicacionDTO::fromEntity)
+                .toList()
+            : List.of();
+
         return new GrupoEstudioDTO(
             grupo.getId(),
             grupo.getNombre(),
             grupo.getMateria(),
             estudiantesDTO,
-            ConversacionDTO.fromEntity(grupo.getConversacion())
+            ConversacionDTO.fromEntity(grupo.getConversacion()),
+            publicacionesDTO
         );
     }
 
@@ -40,6 +48,9 @@ public record GrupoEstudioDTO(
             ? estudiantes.stream().map(EstudianteDTO::toEntity).toList()
             : List.of());
         grupo.setConversacion(conversacion != null ? conversacion.toEntity() : null);
+        grupo.setPublicaciones(publicaciones != null
+            ? publicaciones.stream().map(PublicacionDTO::toEntity).toList()
+            : List.of());
         return grupo;
     }
 }

@@ -54,6 +54,23 @@ public class PublicacionDao {
         }
     }
 
+    public static List<Publicacion> buscarPorGrupoId(Long grupoId) {
+        EntityManager manager = HibernateConfig.getEntityManager();
+        try {
+            TypedQuery<Publicacion> query = manager.createQuery(
+                "SELECT p FROM Publicacion p WHERE p.grupoEstudio.id = :grupoId", Publicacion.class);
+            query.setParameter("grupoId", grupoId);
+            List<Publicacion> publicaciones = query.getResultList();
+            publicaciones.forEach(PublicacionDao::deserializarValoraciones);
+            return publicaciones;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return List.of();
+        } finally {
+            HibernateConfig.closeEntityManager();
+        }
+    }
+
     // Crear una publicación
     public static boolean crear(Publicacion publicacion) {
         EntityManager manager = HibernateConfig.getEntityManager();

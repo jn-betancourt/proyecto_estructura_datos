@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bindr.converters.MateriaEnumListConverter;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.persistence.*;
 
@@ -41,6 +39,10 @@ public class Publicacion {
     @Lob
     @Column(name = "valoraciones_json")
     private String valoracionesJson;
+
+    @ManyToOne
+    @JoinColumn(name = "grupo_estudio_id")
+    private GrupoEstudio grupoEstudio;
 
     public Publicacion() {
         this.materias = new ArrayList<>();
@@ -90,6 +92,14 @@ public class Publicacion {
     }
     public void setArchivo(String archivo) {
         this.archivo = archivo;
+    }
+
+    public GrupoEstudio getGrupoEstudio() {
+        return grupoEstudio;
+    }
+
+    public void setGrupoEstudio(GrupoEstudio grupoEstudio) {
+        this.grupoEstudio = grupoEstudio;
     }
 
     public void agregarMateria(MateriaEstudio materia) {
@@ -149,6 +159,7 @@ public class Publicacion {
         private String titulo;
         private List<Valoracion> valoraciones = new ArrayList<>();
         private List<MateriaEstudio> materias = new ArrayList<>();
+        private GrupoEstudio grupoEstudio;
 
         public Builder id(Long id) {
             this.id = id;
@@ -188,6 +199,11 @@ public class Publicacion {
 
         }
 
+        public Builder grupoEstudio(GrupoEstudio grupoEstudio) {
+            this.grupoEstudio = grupoEstudio;
+            return this;
+        }
+
         public Publicacion build() {
             Publicacion publicacion = new Publicacion();
             publicacion.setId(id);
@@ -197,6 +213,7 @@ public class Publicacion {
             publicacion.setTitulo(titulo);
             publicacion.setMaterias(materias);
             publicacion.setValoraciones(valoraciones);
+            publicacion.setGrupoEstudio(grupoEstudio);
             return publicacion;
         }
     }
