@@ -46,7 +46,7 @@ public class MensajeService {
                 .filter(e -> e != null)
                 .collect(Collectors.toList());
 
-        if (participantes.size() < 2) {
+        if (participantes.size() < 2 && !esGrupo) {
             throw new IllegalArgumentException("Se necesitan al menos dos participantes válidos.");
         }
 

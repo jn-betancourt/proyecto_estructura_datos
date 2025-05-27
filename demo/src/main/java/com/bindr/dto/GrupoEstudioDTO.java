@@ -6,7 +6,7 @@ import com.bindr.modelos.GrupoEstudio;
 import com.bindr.modelos.MateriaEstudio;
 
 public record GrupoEstudioDTO(
-    Integer id,
+    Long id,
     String nombre,
     List<MateriaEstudio> materia,
     List<EstudianteDTO> estudiantes,

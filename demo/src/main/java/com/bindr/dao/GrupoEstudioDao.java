@@ -27,7 +27,7 @@ public class GrupoEstudioDao {
     }
 
     // Buscar por ID
-    public static GrupoEstudio buscarPorId(Integer id) {
+    public static GrupoEstudio buscarPorId(Long id) {
         EntityManager manager = HibernateConfig.getEntityManager();
         try {
             return manager.find(GrupoEstudio.class, id);
@@ -55,7 +55,7 @@ public class GrupoEstudioDao {
     }
 
     // Eliminar grupo
-    public static boolean eliminar(Integer id) {
+    public static boolean eliminar(Long id) {
         EntityManager manager = HibernateConfig.getEntityManager();
         try {
             manager.getTransaction().begin();

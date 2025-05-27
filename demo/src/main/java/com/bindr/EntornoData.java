@@ -21,10 +21,10 @@ public class EntornoData {
 
     public static void setConversaciones(List<ConversacionDTO> conversacionDTOS) {
         conversaciones = new ArrayList<>(conversacionDTOS);
-        if (conversaciones.size() > 0) {
-            setEstudianteActual(conversaciones.get(0).participantes().get(0));
-        } else {
-            setEstudianteActual(null);
-        }
+        //if (conversaciones.size() > 0) {
+          //  setEstudianteActual(conversaciones.get(0).participantes().get(0));
+        //} else {
+          //  setEstudianteActual(null);
+        //}
     }
 }

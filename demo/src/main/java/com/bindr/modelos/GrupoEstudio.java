@@ -13,7 +13,7 @@ public class GrupoEstudio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
@@ -24,7 +24,7 @@ public class GrupoEstudio {
 
     @OneToOne
     @JoinColumn(name = "conversacion_id")
-    private Conversacion conversacion;
+    private Conversacion conversacion; // la cague
 
     @ManyToMany
     @JoinTable(
@@ -38,11 +38,11 @@ public class GrupoEstudio {
         this.estudiantes = new ArrayList<>();
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -89,13 +89,13 @@ public class GrupoEstudio {
     }
 
     public static class Builder {
-        private Integer id;
+        private Long id;
         private String nombre;
         private List<MateriaEstudio> materia;
         private Conversacion conversacion;
         private List<Estudiante> estudiantes = new ArrayList<>();
 
-        public Builder id(Integer id) {
+        public Builder id(Long id) {
             this.id = id;
             return this;
         }
