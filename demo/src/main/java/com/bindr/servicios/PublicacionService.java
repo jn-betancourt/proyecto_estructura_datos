@@ -16,10 +16,22 @@ import com.bindr.modelos.Estudiante;
 import com.bindr.modelos.Publicacion;
 import com.bindr.modelos.Valoracion;
 
+/**
+ * Servicio encargado de la gestión de publicaciones académicas.
+ * Permite crear, actualizar, eliminar y consultar publicaciones, así como gestionar archivos adjuntos y valoraciones.
+ */
 public class PublicacionService {
 
+    // Carpeta donde se almacenan los archivos adjuntos de las publicaciones
     private static final String CARPETA_ARCHIVOS = "publicaciones_archivos";
 
+    /**
+     * Guarda un archivo recibido como InputStream en la carpeta de publicaciones.
+     * @param archivoInput InputStream del archivo a guardar
+     * @param nombreArchivo Nombre con el que se guardará el archivo
+     * @return Ruta absoluta del archivo guardado
+     * @throws IOException Si ocurre un error al guardar el archivo
+     */
     public String guardarArchivo(InputStream archivoInput, String nombreArchivo) throws IOException {
         Path dir = Paths.get(CARPETA_ARCHIVOS);
         if (!Files.exists(dir)) {
@@ -30,6 +42,13 @@ public class PublicacionService {
         return archivoDestino.toAbsolutePath().toString();
     }
 
+    /**
+     * Crea una nueva publicación con un archivo adjunto.
+     * @param dto DTO de la publicación
+     * @param archivoInput InputStream del archivo adjunto
+     * @param nombreArchivo Nombre del archivo adjunto
+     * @return true si la publicación se creó correctamente, false en caso contrario
+     */
     public boolean crearPublicacionConArchivo(PublicacionDTO dto, InputStream archivoInput, String nombreArchivo) {
         try {
             String uriArchivo = guardarArchivo(archivoInput, nombreArchivo);
@@ -42,14 +61,18 @@ public class PublicacionService {
         }
     }
 
-    // Crear nueva publicación
+    /**
+     * Crea una nueva publicación sin archivo adjunto.
+     * @param dto DTO de la publicación
+     * @return true si la publicación se creó correctamente, false en caso contrario
+     */
     public static boolean crearPublicacion(PublicacionDTO dto) {
         Estudiante publicador = EstudianteDao.buscarPorEmail(dto.publicador().correo());
         if (publicador == null) {
             return false;
         }
 
-        // castear DTO de valoraciones a entidades
+        // Convierte las valoraciones del DTO a entidades
         List<Valoracion> valoraciones = dto.valoraciones().stream()
                 .map(ValoracionDTO::toEntity)
                 .collect(Collectors.toList());
@@ -66,7 +89,10 @@ public class PublicacionService {
         return PublicacionDao.crear(publicacion);
     }
 
-    // Obtener todas las publicaciones en formato DTO
+    /**
+     * Obtiene todas las publicaciones en formato DTO.
+     * @return Lista de PublicacionDTO
+     */
     public static List<PublicacionDTO> obtenerTodas() {
         List<Publicacion> publicaciones = PublicacionDao.listarTodas();
         return publicaciones.stream()
@@ -74,7 +100,11 @@ public class PublicacionService {
         .collect(Collectors.toList());
     }
 
-    // Buscar publicación por ID
+    /**
+     * Busca una publicación por su identificador.
+     * @param id Identificador de la publicación
+     * @return PublicacionDTO correspondiente, o null si no existe
+     */
     public static PublicacionDTO buscarPorId(Long id) {
         Publicacion pub = PublicacionDao.buscarPorId(id);
         if (pub == null) return null;
@@ -95,13 +125,20 @@ public class PublicacionService {
         );
     }
 
-    // Eliminar publicación
+    /**
+     * Elimina una publicación por su identificador.
+     * @param id Identificador de la publicación
+     * @return true si se eliminó correctamente, false en caso contrario
+     */
     public static boolean eliminar(Long id) {
         return PublicacionDao.eliminar(id);
     }
 
-
-    // Actualizar título y materias (como ejemplo)
+    /**
+     * Actualiza los datos de una publicación existente (título, materias, valoraciones, archivo).
+     * @param dto DTO con los datos actualizados de la publicación
+     * @return true si la actualización fue exitosa, false en caso contrario
+     */
     public static boolean actualizarPublicacion(PublicacionDTO dto) {
         Publicacion pub = PublicacionDao.buscarPorId(dto.id());
         if (pub == null) return false;
@@ -114,10 +151,14 @@ public class PublicacionService {
         pub.setArchivo(dto.archivo()); // nueva propiedad
         pub.setFecha(LocalDateTime.now()); // actualizar fecha al momento de la edición
 
-
         return PublicacionDao.actualizar(pub);
     }
 
+    /**
+     * Obtiene todas las publicaciones realizadas por un usuario específico.
+     * @param idUsuario Identificador del usuario (estudiante)
+     * @return Lista de PublicacionDTO correspondientes al usuario
+     */
     public static List<PublicacionDTO> obtenerPorIdDeUsuario(Long idUsuario) {
         List<Publicacion> publicaciones = PublicacionDao.buscarPorPublicadorId(idUsuario);
 
