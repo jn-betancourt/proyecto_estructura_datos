@@ -25,7 +25,7 @@ public record ConversacionDTO(
 
         // Convertir participantes a DTO con tipo explícito
         List<EstudianteDTO> participantesDTO = conversacion.getParticipantes().stream()
-            .map(est -> EstudianteDTO.fromEntity(est))
+            .map(EstudianteDTO::fromEntity)
             .collect(Collectors.toList());
 
         // Crear un mapa auxiliar de ID -> EstudianteDTO
@@ -38,8 +38,9 @@ public record ConversacionDTO(
         List<MensajeDTO> mensajesDTO = new ArrayList<>();
         if (conversacion.getMensajes() != null) {
             for (Mensaje mensaje : conversacion.getMensajes()) {
-                EstudianteDTO autor = autorMap.get(mensaje.getAutorId());
-                mensajesDTO.add(MensajeDTO.fromEntity(mensaje, autor));
+                Estudiante autor = mensaje.getAutor();
+                EstudianteDTO autorDTO = autor != null ? autorMap.get(autor.getId()) : null;
+                mensajesDTO.add(MensajeDTO.fromEntity(mensaje, autorDTO));
             }
         }
 
@@ -51,6 +52,7 @@ public record ConversacionDTO(
             conversacion.isEsGrupo()
         );
     }
+
     public Conversacion toEntity() {
         Conversacion conversacion = Conversacion.builder() 
         .id(this.id())

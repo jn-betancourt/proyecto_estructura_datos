@@ -21,7 +21,7 @@ public record MensajeDTO(
 
     public Mensaje toEntity() {
         return Mensaje.builder()
-            .autorId(autor != null ? autor.id() : null)
+            .autor(autor.toEntity())
             .contenido(contenido)
             .fecha(fecha)
             .build();

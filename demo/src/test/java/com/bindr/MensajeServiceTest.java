@@ -32,7 +32,7 @@ public class MensajeServiceTest {
         Assertions.assertEquals(2, conversacion.participantes().size());
         List<String> correos = conversacion.participantes().stream().map(EstudianteDTO::correo).toList();
         Assertions.assertTrue(correos.containsAll(List.of(correo1, correo2)));
-    }
+    } // faltan los  mensajes
 
     @AfterEach
     public void limpiar() {

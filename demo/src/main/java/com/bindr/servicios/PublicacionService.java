@@ -24,6 +24,7 @@ public class PublicacionService {
 
     // Carpeta donde se almacenan los archivos adjuntos de las publicaciones
     private static final String CARPETA_ARCHIVOS = "publicaciones_archivos";
+    private static final AfinidadService afinidadService = new AfinidadService(); // Instancia o inyección adecuada
 
     /**
      * Guarda un archivo recibido como InputStream en la carpeta de publicaciones.
@@ -148,8 +149,17 @@ public class PublicacionService {
         pub.setValoraciones(dto.valoraciones().stream()
                 .map(ValoracionDTO::toEntity)
                 .collect(Collectors.toList()));
-        pub.setArchivo(dto.archivo()); // nueva propiedad
-        pub.setFecha(LocalDateTime.now()); // actualizar fecha al momento de la edición
+        pub.setArchivo(dto.archivo());
+        pub.setFecha(LocalDateTime.now());
+
+        // Registrar interacción por cada valoración nueva
+        Estudiante autor = pub.getPublicador();
+        for (ValoracionDTO val : dto.valoraciones()) {
+            Estudiante evaluador = EstudianteDao.buscarPorEmail(val.autor());
+            if (evaluador != null && !evaluador.equals(autor)) {
+                afinidadService.registrarInteraccion(autor, evaluador);
+            }
+        }
 
         return PublicacionDao.actualizar(pub);
     }

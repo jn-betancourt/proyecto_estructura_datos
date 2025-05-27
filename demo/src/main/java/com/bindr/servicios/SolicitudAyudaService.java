@@ -16,6 +16,7 @@ public class SolicitudAyudaService {
 
     // Cola de prioridad en memoria para gestionar el orden de atención
     private final ColaPrioridadSolicitudAyuda colaPrioridad = new ColaPrioridadSolicitudAyuda();
+    private final AfinidadService afinidadService = new AfinidadService(); // Instancia o inyección adecuada
 
     /**
      * Crea una nueva solicitud de ayuda y la inserta en la cola de prioridad y la base de datos.
@@ -40,8 +41,11 @@ public class SolicitudAyudaService {
         SolicitudAyuda solicitud = dto.toEntity();
         boolean actualizada = SolicitudAyudaDao.actualizar(solicitud);
         if (actualizada) {
-            // Si cambia la urgencia, actualiza la prioridad en la cola
             colaPrioridad.actualizarPrioridad(solicitud.getId(), solicitud.getUrgencia());
+            // Registrar interacción si la solicitud fue aceptada o resuelta
+            if (solicitud.getRemitente() != null && solicitud.getDestinatario() != null) {
+                afinidadService.registrarInteraccion(solicitud.getRemitente(), solicitud.getDestinatario());
+            }
         }
         return actualizada;
     }

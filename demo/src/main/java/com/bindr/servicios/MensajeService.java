@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
  */
 public class MensajeService {
 
+    private static final AfinidadService afinidadService = new AfinidadService(); // Instancia o inyección adecuada
+
     /**
      * Obtiene todas las conversaciones en las que participa un usuario.
      * @param id Identificador del usuario (estudiante)
@@ -48,6 +50,13 @@ public class MensajeService {
             throw new IllegalArgumentException("Se necesitan al menos dos participantes válidos.");
         }
 
+        // Registrar interacción entre todos los pares de participantes
+        for (int i = 0; i < participantes.size(); i++) {
+            for (int j = i + 1; j < participantes.size(); j++) {
+                afinidadService.registrarInteraccion(participantes.get(i), participantes.get(j));
+            }
+        }
+
         Conversacion conversacion = Conversacion.builder()
                 .participantes(participantes)
                 .esGrupo(esGrupo)
@@ -65,19 +74,26 @@ public class MensajeService {
     /**
      * Envía un mensaje a una conversación existente.
      * @param conversacionId Identificador de la conversación
-     * @param correoAutor Correo electrónico del autor del mensaje
+     * @param autorDTO DTO del autor del mensaje
      * @param contenido Contenido del mensaje
      * @return true si el mensaje se envió correctamente, false en caso contrario
      */
-    public static boolean enviarMensaje(Long conversacionId, String correoAutor, String contenido) {
+    public static boolean enviarMensaje(Long conversacionId, EstudianteDTO autorDTO, String contenido) {
         Conversacion conversacion = ConversacionDao.obtenerPorId(conversacionId);
         if (conversacion == null) return false;
 
-        Estudiante autor = EstudianteDao.buscarPorEmail(correoAutor);
+        Estudiante autor = autorDTO.toEntity();
         if (autor == null) return false;
 
+        // Registrar interacción entre autor y todos los demás participantes
+        for (Estudiante participante : conversacion.getParticipantes()) {
+            if (!participante.equals(autor)) {
+                afinidadService.registrarInteraccion(autor, participante);
+            }
+        }
+
         Mensaje mensaje = Mensaje.builder()
-                .autorId(autor.getId())
+                .autor(autor)
                 .contenido(contenido)
                 .fecha(LocalDateTime.now())
                 .build();
@@ -93,7 +109,6 @@ public class MensajeService {
      */
     public static ConversacionDTO obtenerConversacionDTO(Long id) {
         Conversacion conversacion = ConversacionDao.obtenerPorId(id);
-        System.out.println(conversacion.getParticipantes());
         if (conversacion == null) return null;
         return toDTO(conversacion);
     }
@@ -124,7 +139,7 @@ public class MensajeService {
         List<MensajeDTO> mensajes = conversacion.getMensajes().stream()
                 .map(m -> {
                     Optional<Estudiante> autor = conversacion.getParticipantes().stream()
-                            .filter(e -> e.getId().equals(m.getAutorId()))
+                            .filter(e -> e.getId().equals(m.getAutor().getId()))
                             .findFirst();
                     EstudianteDTO autorDTO = autor
                             .map(e -> new EstudianteDTO(e.getId(), e.getNombre(), e.getCorreo()))

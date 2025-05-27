@@ -16,6 +16,8 @@ import com.bindr.modelos.GrupoEstudio;
  */
 public class GrupoEstudioService {
     
+    private final AfinidadService afinidadService = new AfinidadService(); // Instancia o inyección adecuada
+
     /**
      * Crea un nuevo grupo de estudio a partir de un DTO.
      * @param dto DTO con la información del grupo a crear
@@ -23,7 +25,18 @@ public class GrupoEstudioService {
      */
     public boolean crearGrupo(GrupoEstudioDTO dto) {
         GrupoEstudio grupo = dto.toEntity();
-        return GrupoEstudioDao.crear(grupo);
+        boolean creado = GrupoEstudioDao.crear(grupo);
+
+        // Registrar interacción entre todos los miembros si el grupo fue creado
+        if (creado) {
+            List<Estudiante> miembros = grupo.getEstudiantes();
+            for (int i = 0; i < miembros.size(); i++) {
+                for (int j = i + 1; j < miembros.size(); j++) {
+                    afinidadService.registrarInteraccion(miembros.get(i), miembros.get(j));
+                }
+            }
+        }
+        return creado;
     }
 
     /**

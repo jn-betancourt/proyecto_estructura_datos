@@ -1,18 +1,7 @@
 package com.bindr;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import java.util.List;
-
-import com.bindr.dto.EstudianteDTO;
-import com.bindr.dto.PublicacionDTO;
-import com.bindr.dto.RegistroRequestDTO;
-import com.bindr.dto.ValoracionDTO;
-import com.bindr.modelos.MateriaEstudio;
 import com.bindr.persistencia.HibernateConfig;
-import com.bindr.servicios.AutenticacionService;
-import com.bindr.servicios.PublicacionService;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +18,6 @@ public class App extends Application {
 
     public static void main(String[] args) {
         HibernateConfig.getEntityManager();
-        simularValoracionDePublicacion();
         launch();
     }
 

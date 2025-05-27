@@ -5,14 +5,14 @@ import java.time.LocalDateTime;
 public class Mensaje {
 
     private Long id;
-    private Long autorId;
+    private Estudiante autor;
     private String contenido;
     private LocalDateTime fecha;
 
     // Constructor privado para forzar uso de Builder
-    private Mensaje(Long id, Long autorId, String contenido, LocalDateTime fecha) {
+    private Mensaje(Long id, Estudiante autor, String contenido, LocalDateTime fecha) {
         this.id = id;
-        this.autorId = autorId;
+        this.autor = autor;
         this.contenido = contenido;
         this.fecha = fecha;
     }
@@ -35,12 +35,12 @@ public class Mensaje {
         this.id = id;
     }
 
-    public Long getAutorId() {
-        return autorId;
+    public Estudiante getAutor() {
+        return this.autor;
     }
 
-    public void setAutorId(Long autorId) {
-        this.autorId = autorId;
+    public void setAutorId(Estudiante autor) {
+        this.autor = autor;
     }
 
     public String getContenido() {
@@ -62,7 +62,7 @@ public class Mensaje {
     // Builder
     public static class Builder {
         private Long id;
-        private Long autorId;
+        private Estudiante autor;
         private String contenido;
         private LocalDateTime fecha;
 
@@ -73,8 +73,8 @@ public class Mensaje {
             return this;
         }
 
-        public Builder autorId(Long autorId) {
-            this.autorId = autorId;
+        public Builder autor(Estudiante autor) {
+            this.autor = autor;
             return this;
         }
 
@@ -89,7 +89,7 @@ public class Mensaje {
         }
 
         public Mensaje build() {
-            return new Mensaje(id, autorId, contenido, fecha);
+            return new Mensaje(id, autor, contenido, fecha);
         }
     }
 }

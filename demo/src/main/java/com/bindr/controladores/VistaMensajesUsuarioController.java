@@ -204,10 +204,10 @@ public class VistaMensajesUsuarioController {
         String contenido = textFieldEscribirMensaje.getText().trim();
 
         try {
-            // Enviar mensaje usando el servicio
+            // Enviar mensaje usando el servicio, ahora con EstudianteDTO como autor
             boolean enviado = MensajeService.enviarMensaje(
                     conversacionActiva.id(),
-                    usuarioActualEmail,
+                    EntornoData.getEstudianteActual(), // <-- Cambiado aquí
                     contenido
             );
 
