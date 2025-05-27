@@ -5,6 +5,7 @@ import com.bindr.dto.EstudianteDTO;
 import com.bindr.dto.LoginRequestDTO;
 import com.bindr.persistencia.HibernateConfig;
 import com.bindr.servicios.AutenticacionService;
+import com.bindr.servicios.MensajeService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class VistaLoginController {
@@ -36,6 +38,7 @@ public class VistaLoginController {
     private TextField textFieldIngresarCorreo;
 
     private final AutenticacionService authService = new AutenticacionService();
+    private final MensajeService mensajeService = new MensajeService();
 
     @FXML
     private void irAInicioUsuario(ActionEvent event) {
@@ -59,6 +62,15 @@ public class VistaLoginController {
             }
             System.out.println(estudiante.id());
             EntornoData.setEstudianteActual(estudiante);
+
+            EntornoData.setConversaciones(
+                    MensajeService.obtenerConversacionesPorUsuario(EntornoData.getEstudianteActual().id())
+            );
+            //ciclo para verificar las conversaciones
+            for(int i = 0; i < EntornoData.getConversaciones().size(); i++) {
+                System.out.println(EntornoData.getConversaciones().get(i).participantes());
+            }
+            System.out.println(EntornoData.getConversaciones().size());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/VistaPrincipalUsuario.fxml"));
             Parent root = loader.load();
 

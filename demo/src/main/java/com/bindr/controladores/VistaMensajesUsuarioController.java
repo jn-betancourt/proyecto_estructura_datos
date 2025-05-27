@@ -36,10 +36,8 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class VistaMensajesUsuarioController {
 
-    @FXML
-    private ImageView ImageUser;
+public class VistaMensajesUsuarioController {
 
     @FXML
     private VBox VboxChats;
@@ -54,10 +52,7 @@ public class VistaMensajesUsuarioController {
     private Button btnIniciarChat;
 
     @FXML
-    private TextField lblResultadoBusqueda;
-
-    @FXML
-    private Button btnEnviar;
+    private Button btnEnviarMensaje;
 
     @FXML
     private Button btnUsuario1;
@@ -84,7 +79,7 @@ public class VistaMensajesUsuarioController {
     private Button btnResultadoBusqueda;
 
     @FXML
-    private VBox mensajesVbox;
+    private VBox vboxMensajes;
 
     @FXML
     private TextField textFieldBuscaOIniciaChat;
@@ -101,8 +96,8 @@ public class VistaMensajesUsuarioController {
     public void initialize() {
         cargarUsuarioActual(); // Obtiene ID y email de la base de datos
         configurarBotones();
-        cargarConversaciones();
         configurarEventos();
+        cargarConversaciones();
     }
 
     private void cargarUsuarioActual() {
@@ -119,9 +114,8 @@ public class VistaMensajesUsuarioController {
     }
 
     private void cargarConversaciones() {
-        System.out.println("hola");
-        List<ConversacionDTO> conversaciones = MensajeService.obtenerConversacionesPorUsuario(usuarioActualId);
-        System.out.println(conversaciones);
+        List<ConversacionDTO> conversaciones = EntornoData.getConversaciones();
+
         List<Button> botones = Arrays.asList(btnUsuario1, btnUsuario2, btnUsuario3, btnUsuario4, btnUsuario5, btnUsuario6, btnUsuario7);
 
         for (int i = 0; i < Math.min(conversaciones.size(), botones.size()); i++) {
@@ -129,6 +123,7 @@ public class VistaMensajesUsuarioController {
             Button boton = botones.get(i);
 
             String nombreChat = obtenerNombreChat(conversacion);
+            System.out.println(nombreChat);
             boton.setText(nombreChat);
             boton.setVisible(true);
             boton.setUserData(conversacion);
@@ -141,20 +136,31 @@ public class VistaMensajesUsuarioController {
         }
     }
 
+
     private String obtenerNombreChat(ConversacionDTO conversacion) {
+
+       // if (conversacion == null || conversacion.participantes() == null)
+         //   return "Chat desconocido";
+        //}
+
         if (conversacion.esGrupo()) {
             return "Grupo: " + conversacion.participantes().stream()
-                    .limit(3)
                     .map(EstudianteDTO::nombre)
                     .collect(Collectors.joining(", "));
         }
 
-        return conversacion.participantes().stream()
-                .filter(p -> !p.id().equals(usuarioActualId))
-                .findFirst()
-                .map(EstudianteDTO::nombre)
-                .orElse("Chat desconocido");
+        // Para chat individual, obtener el nombre del otro participante
+        if (!conversacion.esGrupo())
+        for (EstudianteDTO participante : conversacion.participantes()) {
+            System.out.println(participante.nombre());
+            if (!participante.id().equals(usuarioActualId)) {
+                return participante.nombre();
+            }
+        }
+
+        return "Chat desconocido";
     }
+
 
     private void resaltarBotonSeleccionado(Button botonSeleccionado) {
         Arrays.asList(btnUsuario1, btnUsuario2, btnUsuario3, btnUsuario4, btnUsuario5, btnUsuario6, btnUsuario7)
@@ -168,7 +174,7 @@ public class VistaMensajesUsuarioController {
     }
 
     private void mostrarMensajes(ConversacionDTO conversacion) {
-        mensajesVbox.getChildren().clear();
+        vboxMensajes.getChildren().clear();
 
         for (MensajeDTO mensaje : conversacion.mensajes()) {
             boolean esMio = mensaje.autor() != null && mensaje.autor().id().equals(usuarioActualId);
@@ -184,12 +190,12 @@ public class VistaMensajesUsuarioController {
             lblMensaje.setMaxWidth(300);
 
             contenedorMensaje.getChildren().add(lblMensaje);
-            mensajesVbox.getChildren().add(contenedorMensaje);
+            vboxMensajes.getChildren().add(contenedorMensaje);
         }
     }
 
     private void configurarEventos() {
-        btnEnviar.setOnAction(e -> enviarMensaje());
+        btnEnviarMensaje.setOnAction(e -> enviarMensaje());
         textFieldEscribirMensaje.setOnAction(e -> enviarMensaje());
     }
 
@@ -258,7 +264,9 @@ public class VistaMensajesUsuarioController {
     }
 
     @FXML
-    void abrirChat(){}
+    void abrirChat() {
+        iniciarChat(null);
+    }
 
 
     @FXML
@@ -366,4 +374,3 @@ public class VistaMensajesUsuarioController {
         }
     }
 }
-

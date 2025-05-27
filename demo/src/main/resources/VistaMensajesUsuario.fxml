@@ -18,11 +18,7 @@
          <top>
             <HBox prefHeight="36.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#irAInicio" prefHeight="34.0" prefWidth="70.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" stylesheets="@styles/styles.css" text="Atrás">
-                     <styleClass>
-                        <String fx:value="button-primary" />
-                        <String fx:value="card-mini" />
-                     </styleClass></Button>
+                  <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#irAInicio" prefHeight="34.0" prefWidth="70.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" styleClass="button-primary" stylesheets="@styles/styles.css" text="Atrás" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Chats" wrappingWidth="85.98306465148926">
                      <font>
                         <Font size="25.0" />
@@ -39,26 +35,21 @@
                         <Insets bottom="6.0" left="10.0" right="10.0" top="6.0" />
                      </padding>
                   </TextField>
-                  <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscar" prefHeight="34.0" prefWidth="71.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" stylesheets="@styles/styles.css" text="Buscar">
+                  <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscar" prefHeight="34.0" prefWidth="71.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" styleClass="button-primary" stylesheets="@styles/styles.css" text="Buscar">
                      <HBox.margin>
-                        <Insets right="10.0" />
+                        <Insets left="10.0" />
                      </HBox.margin>
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
-                     <styleClass>
-                        <String fx:value="button-primary" />
-                        <String fx:value="card-mini" />
-                     </styleClass>
                   </Button>
-                  <Button fx:id="btnResultadoBusqueda" mnemonicParsing="false" onAction="#iniciarChat" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10;" stylesheets="@styles/styles.css">
+                  <Button fx:id="btnResultadoBusqueda" mnemonicParsing="false" onAction="#abrirChat" prefHeight="34.0" prefWidth="110.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10;" styleClass="button-primary" stylesheets="@styles/styles.css">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
-                     <styleClass>
-                        <String fx:value="button-primary" />
-                        <String fx:value="card-mini" />
-                     </styleClass>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
                   </Button>
                </children>
             </HBox>
@@ -93,7 +84,7 @@
                                           <Insets left="10.0" />
                                        </padding>
                                        <children>
-                                          <Button fx:id="btnUsuario2" mnemonicParsing="false" onAction="#abrirChat" prefHeight="60.0" prefWidth="155.0" stylesheets="@styles/styles.css" text="Usuario2">
+                                          <Button fx:id="btnUsuario2" mnemonicParsing="false" onAction="#abrirChat" prefHeight="60.0" prefWidth="155.0" text="Usuario2">
                                              <styleClass>
                                                 <String fx:value="card-mini" />
                                                 <String fx:value="button-secondary" />
@@ -190,25 +181,25 @@
             </ScrollPane>
          </left>
          <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="397.0" prefWidth="203.0" BorderPane.alignment="CENTER">
                <children>
                   <ScrollPane prefHeight="425.0" prefWidth="416.0">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="424.0" prefWidth="409.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="464.0" prefWidth="402.0">
                            <children>
-                              <VBox fx:id="mensajesVbox" prefHeight="409.0" prefWidth="401.0" />
+                              <VBox fx:id="vboxMensajes" layoutX="1.0" layoutY="-2.0" prefHeight="410.0" prefWidth="398.0" />
                            </children>
                         </AnchorPane>
                     </content>
                   </ScrollPane>
-                  <HBox prefHeight="37.0" prefWidth="416.0">
+                  <HBox prefHeight="36.0" prefWidth="416.0">
                      <children>
-                        <TextField fx:id="textFieldEscribirMensaje" prefHeight="34.0" prefWidth="344.0" promptText="Escribe un mensaje" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #f0f0f0;">
+                        <TextField fx:id="textFieldEscribirMensaje" prefHeight="36.0" prefWidth="342.0" promptText="Escribe un mensaje" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #f0f0f0;">
                            <padding>
                               <Insets bottom="6.0" left="10.0" right="10.0" top="6.0" />
                            </padding>
                         </TextField>
-                        <Button fx:id="btnEnviar" mnemonicParsing="false" onAction="#enviarMensaje" prefHeight="31.0" prefWidth="66.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" stylesheets="@styles/styles.css" text="&gt;&gt;">
+                        <Button fx:id="btnEnviarMensaje" mnemonicParsing="false" onAction="#enviarMensaje" prefHeight="31.0" prefWidth="66.0" style="-fx-background-color: #ff9f19; -fx-background-radius: 10;" stylesheets="@styles/styles.css" text="&gt;&gt;">
                            <styleClass>
                               <String fx:value="button-primary" />
                               <String fx:value="card-mini" />
