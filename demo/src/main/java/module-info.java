@@ -24,4 +24,5 @@ module com.bindr {
     exports com.bindr.modelos;
     exports com.bindr.persistencia;
     exports com.bindr.servicios;
+    exports com.bindr.utils;
 }
