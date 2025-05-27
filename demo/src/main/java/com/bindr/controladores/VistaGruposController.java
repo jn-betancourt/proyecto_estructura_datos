@@ -14,6 +14,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+
 public class VistaGruposController {
 
     @FXML
@@ -38,7 +45,7 @@ public class VistaGruposController {
     private TextField labelTituloContenido;
 
     @FXML
-    private TableColumn<?, ?> tablaGruposDisponibles;
+    private TableView<?> tablaGruposDisponibles;
 
     @FXML
     void crearGrupo(ActionEvent event) {
@@ -62,7 +69,19 @@ public class VistaGruposController {
     }
 
     @FXML
-    void publicar(ActionEvent event) {
+    void irAMisGrupos(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VistaMisGrupos.fxml"));
+            Parent configView = loader.load();
+
+            Scene scene = new Scene(configView);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -72,5 +91,3 @@ public class VistaGruposController {
     }
 
 }
-
-
