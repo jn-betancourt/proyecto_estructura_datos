@@ -1,15 +1,14 @@
 package com.bindr.controladores;
 
 import com.bindr.EntornoData;
-import com.bindr.dao.EstudianteDao;
 import com.bindr.dto.ConversacionDTO;
 import com.bindr.dto.EstudianteDTO;
 import com.bindr.dto.GrupoEstudioDTO;
-import com.bindr.dto.MensajeDTO;
 import com.bindr.modelos.MateriaEstudio;
-import com.bindr.servicios.EstudianteService;
 import com.bindr.servicios.GrupoEstudioService;
 import com.bindr.servicios.MensajeService;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,18 +19,13 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
-
-import javax.swing.*;
 
 public class VistaGruposController {
 
@@ -82,6 +76,7 @@ public class VistaGruposController {
         });
 
         cargarUsuarioActual();
+        configurarTablaGruposDisponibles(); // Agregar esta línea
         cargarGruposDisponibles();
     }
 
@@ -91,29 +86,32 @@ public class VistaGruposController {
 
     @FXML
     void crearGrupo(ActionEvent event) {
+        // Validar que se hayan llenado los campos requeridos
+        if (labelTituloContenido.getText().isEmpty() || desplegableMaterias.getValue() == null) {
+            // Puedes agregar una alerta aquí si quieres
+            System.out.println("Por favor complete todos los campos");
+            return;
+        }
+
         ConversacionDTO con = mensajeService.crearConversacion(List.of(EntornoData.getEstudianteActual().correo()), true);
         GrupoEstudioDTO grupoNuevo = new GrupoEstudioDTO(
                 null, // ID se asignará automáticamente
                 labelTituloContenido.getText(),
                 List.of(desplegableMaterias.getValue()), // Materia seleccionada
-                new ArrayList<>(List.of(EntornoData.getEstudianteActual())), // AGREGA EL USUARIO QUE ESTA CREANDO EL GRUPO, NO HAY ADMIN DE GRUPO XD
-                 con// Conversación inicial
+                new ArrayList<>(List.of(EntornoData.getEstudianteActual())), // AGREGA EL USUARIO QUE ESTA CREANDO EL GRUPO
+                con // Conversación inicial
         );
-        System.out.println(grupoService.crearGrupo(grupoNuevo));
-    }
-    // Método auxiliar para limpiar campos (opcional)
-    private void limpiarCampos() {
-        labelTituloContenido.clear();
-        desplegableMaterias.getSelectionModel().clearSelection();
-    }
 
-    // Método auxiliar para mostrar alerts
-    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
-        Alert alert = new Alert(tipo);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
+        GrupoEstudioDTO grupoCreado = grupoService.crearGrupo(grupoNuevo);
+        System.out.println("Grupo creado: " + grupoCreado);
+
+        // Limpiar los campos después de crear el grupo
+        labelTituloContenido.clear();
+        labelAutor.clear();
+        desplegableMaterias.setValue(null);
+
+        // Recargar la tabla para reflejar los cambios
+        cargarGruposDisponibles();
     }
 
     private void cargarGruposDisponibles() {
@@ -130,6 +128,20 @@ public class VistaGruposController {
         if (tablaGruposDisponibles != null) {
             tablaGruposDisponibles.getItems().setAll(disponibles);
         }
+    }
+
+
+    private void configurarTablaGruposDisponibles() {
+        // Obtener la columna de la tabla (la única columna "Grupos Disponibles")
+        TableColumn<GrupoEstudioDTO, String> columnaGrupos = (TableColumn<GrupoEstudioDTO, String>) tablaGruposDisponibles.getColumns().get(0);
+
+        // Configurar la celda para mostrar el nombre del grupo
+        columnaGrupos.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<GrupoEstudioDTO, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<GrupoEstudioDTO, String> param) {
+                return new SimpleStringProperty(param.getValue().nombre());
+            }
+        });
     }
 
     @FXML
