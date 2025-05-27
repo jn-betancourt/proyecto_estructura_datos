@@ -4,17 +4,12 @@ import com.bindr.EntornoData;
 import com.bindr.dto.ConversacionDTO;
 import com.bindr.dto.EstudianteDTO;
 import com.bindr.dto.MensajeDTO;
-import com.bindr.persistencia.HibernateConfig;
 import com.bindr.servicios.EstudianteService;
 import com.bindr.servicios.MensajeService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -23,16 +18,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -139,8 +129,8 @@ public class VistaMensajesUsuarioController {
 
     private String obtenerNombreChat(ConversacionDTO conversacion) {
 
-       // if (conversacion == null || conversacion.participantes() == null)
-         //   return "Chat desconocido";
+        // if (conversacion == null || conversacion.participantes() == null)
+        //   return "Chat desconocido";
         //}
 
         if (conversacion.esGrupo()) {
@@ -151,12 +141,12 @@ public class VistaMensajesUsuarioController {
 
         // Para chat individual, obtener el nombre del otro participante
         if (!conversacion.esGrupo())
-        for (EstudianteDTO participante : conversacion.participantes()) {
-            System.out.println(participante.nombre());
-            if (!participante.id().equals(usuarioActualId)) {
-                return participante.nombre();
+            for (EstudianteDTO participante : conversacion.participantes()) {
+                System.out.println(participante.nombre());
+                if (!participante.id().equals(usuarioActualId)) {
+                    return participante.nombre();
+                }
             }
-        }
 
         return "Chat desconocido";
     }
@@ -358,6 +348,8 @@ public class VistaMensajesUsuarioController {
         }
     }
     //navegacion
+
+
     @FXML
     void irAInicio(ActionEvent event) {
         try {
