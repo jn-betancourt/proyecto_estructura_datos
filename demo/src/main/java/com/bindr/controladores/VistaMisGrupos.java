@@ -84,31 +84,8 @@ public class VistaMisGrupos {
 
     }
 
-
-
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
-    }
-
     @FXML
     void subirArchivo(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleccionar archivo");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("PDF", "*.pdf"),
-                new FileChooser.ExtensionFilter("Documentos", "*.docx"),
-                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg")
-        );
-
-        archivoSeleccionado = fileChooser.showOpenDialog(btnSubirArchivo.getScene().getWindow());
-
-        if (archivoSeleccionado != null) {
-            mostrarAlerta("Éxito", "Archivo seleccionado: " + archivoSeleccionado.getName());
-        }
     }
 
 }

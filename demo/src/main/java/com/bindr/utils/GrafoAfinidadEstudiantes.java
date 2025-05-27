@@ -64,6 +64,75 @@ public class GrafoAfinidadEstudiantes {
         return adyacencias.containsKey(e1) && adyacencias.get(e1).containsKey(e2);
     }
 
+
+    /**
+     * Detecta comunidades de estudio (componentes conexas) en el grafo.
+     * @return Lista de conjuntos de estudiantes, cada conjunto es una comunidad.
+     */
+    public List<Set<Estudiante>> detectarComunidades() {
+        Set<Estudiante> visitados = new HashSet<>();
+        List<Set<Estudiante>> comunidades = new ArrayList<>();
+
+        for (Estudiante estudiante : adyacencias.keySet()) {
+            if (!visitados.contains(estudiante)) {
+                Set<Estudiante> comunidad = new HashSet<>();
+                dfs(estudiante, comunidad, visitados);
+                comunidades.add(comunidad);
+            }
+        }
+        return comunidades;
+    }
+
+    // DFS auxiliar
+    private void dfs(Estudiante actual, Set<Estudiante> comunidad, Set<Estudiante> visitados) {
+        visitados.add(actual);
+        comunidad.add(actual);
+        for (Estudiante vecino : adyacencias.getOrDefault(actual, Collections.emptyMap()).keySet()) {
+            if (!visitados.contains(vecino)) {
+                dfs(vecino, comunidad, visitados);
+            }
+        }
+    }
+
+    // ...existing code...
+
+    /**
+     * Encuentra el camino más corto (por cantidad de conexiones) entre dos estudiantes usando BFS.
+     * @param origen Estudiante de inicio
+     * @param destino Estudiante de destino
+     * @return Lista de estudiantes que forman el camino más corto, o lista vacía si no hay conexión
+     */
+    public List<Estudiante> caminoMasCorto(Estudiante origen, Estudiante destino) {
+        if (origen == null || destino == null || !adyacencias.containsKey(origen) || !adyacencias.containsKey(destino)) {
+            return Collections.emptyList();
+        }
+        Queue<List<Estudiante>> queue = new LinkedList<>();
+        Set<Estudiante> visitados = new HashSet<>();
+        queue.add(List.of(origen));
+        visitados.add(origen);
+
+        while (!queue.isEmpty()) {
+            List<Estudiante> camino = queue.poll();
+            Estudiante actual = camino.get(camino.size() - 1);
+
+            if (actual.equals(destino)) {
+                return camino;
+            }
+
+            for (Estudiante vecino : adyacencias.getOrDefault(actual, Collections.emptyMap()).keySet()) {
+                if (!visitados.contains(vecino)) {
+                    visitados.add(vecino);
+                    List<Estudiante> nuevoCamino = new ArrayList<>(camino);
+                    nuevoCamino.add(vecino);
+                    queue.add(nuevoCamino);
+                }
+            }
+        }
+        return Collections.emptyList(); // No hay camino
+    }
+
+// ...existing code...
+
     public void vaciar() {
         adyacencias.clear();
     }

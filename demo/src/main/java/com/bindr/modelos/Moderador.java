@@ -1,21 +1,31 @@
 package com.bindr.modelos;
 
+import jakarta.persistence.*; // O usa javax.persistence.* si tu proyecto lo requiere
 import java.util.*;
 
-
+@Entity
+@Table(name = "moderadores")
 public class Moderador {
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private String nombre;
+
+    @Column(nullable = false, unique = true)
     private String correo;
-    private String contrasena;
+
+    @Column(nullable = false)
+    private String contraseña;
 
     public Moderador() {}
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -36,20 +46,20 @@ public class Moderador {
     }
 
     public String getContrasena() {
-        return contrasena;
+        return contraseña;
     }
 
     public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+        this.contraseña = contrasena;
     }
 
     public static class Builder {
-        private Integer id;
+        private Long id;
         private String nombre;
         private String correo;
         private String contrasena;
 
-        public Builder id(Integer id) {
+        public Builder id(Long id) {
             this.id = id;
             return this;
         }

@@ -22,6 +22,13 @@ public class AfinidadService {
 
     private final GrafoAfinidadEstudiantes grafo = new GrafoAfinidadEstudiantes();
 
+     /**
+     * Permite acceder al grafo de afinidad (para reportes o análisis avanzados).
+     */
+    public GrafoAfinidadEstudiantes getGrafo() {
+        return grafo;
+    }
+
     /**
      * Agrega un estudiante a la red de afinidad.
      * Si ya existe, no realiza ninguna acción.
