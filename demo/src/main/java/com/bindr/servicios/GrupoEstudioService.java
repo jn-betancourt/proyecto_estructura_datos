@@ -110,7 +110,6 @@ public class GrupoEstudioService {
         grupo.getEstudiantes().removeIf(e -> e.getId().equals(estudianteId));
         return GrupoEstudioDao.actualizar(grupo);
     }
-
     /**
      * Asocia una conversación a un grupo de estudio.
      * @param grupoId Identificador del grupo
@@ -125,7 +124,6 @@ public class GrupoEstudioService {
         grupo.setConversacion(conversacion);
         return GrupoEstudioDao.actualizar(grupo);
     }
-
     /**
      * Obtiene todas las publicaciones asociadas a un grupo de estudio.
      */

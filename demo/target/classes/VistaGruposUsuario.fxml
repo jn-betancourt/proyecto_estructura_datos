@@ -101,7 +101,7 @@
                            <children>
                               <TableView fx:id="tablaGruposDisponibles" prefHeight="258.0" prefWidth="591.0">
                                  <columns>
-                                    <TableColumn prefWidth="588.0" text="Grupos Disponibles" />
+                                    <TableColumn fx:id="columnaNombre" prefWidth="588.0" text="Grupos Disponibles" />
                                  </columns>
                               </TableView>
                            </children>

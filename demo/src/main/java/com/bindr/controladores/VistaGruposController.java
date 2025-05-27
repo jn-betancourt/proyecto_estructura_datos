@@ -1,15 +1,14 @@
 package com.bindr.controladores;
 
 import com.bindr.EntornoData;
-import com.bindr.dao.EstudianteDao;
 import com.bindr.dto.ConversacionDTO;
 import com.bindr.dto.EstudianteDTO;
 import com.bindr.dto.GrupoEstudioDTO;
-import com.bindr.dto.MensajeDTO;
 import com.bindr.modelos.MateriaEstudio;
-import com.bindr.servicios.EstudianteService;
 import com.bindr.servicios.GrupoEstudioService;
 import com.bindr.servicios.MensajeService;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,21 +16,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
-
-import javax.swing.*;
 
 public class VistaGruposController {
 
@@ -59,6 +53,9 @@ public class VistaGruposController {
     @FXML
     private TableView<GrupoEstudioDTO> tablaGruposDisponibles;
 
+    @FXML
+    private TableColumn<GrupoEstudioDTO, String> columnaNombre;
+
     private Long usuarioActualId;
     private final GrupoEstudioService grupoService = new GrupoEstudioService();
     private final MensajeService mensajeService = new MensajeService();
@@ -82,6 +79,7 @@ public class VistaGruposController {
         });
 
         cargarUsuarioActual();
+        configurarTablaGruposDisponibles(); // Agregar esta línea
         cargarGruposDisponibles();
     }
 
@@ -91,30 +89,47 @@ public class VistaGruposController {
 
     @FXML
     void crearGrupo(ActionEvent event) {
+        // Validar que se hayan llenado los campos requeridos
+        if (labelTituloContenido.getText().isEmpty() || desplegableMaterias.getValue() == null) {
+            // Puedes agregar una alerta aquí si quieres
+            System.out.println("Por favor complete todos los campos");
+            return;
+        }
+
         ConversacionDTO con = mensajeService.crearConversacion(List.of(EntornoData.getEstudianteActual().correo()), true);
         GrupoEstudioDTO grupoNuevo = new GrupoEstudioDTO(
                 null, // ID se asignará automáticamente
                 labelTituloContenido.getText(),
                 List.of(desplegableMaterias.getValue()), // Materia seleccionada
-                new ArrayList<>(List.of(EntornoData.getEstudianteActual())), // AGREGA EL USUARIO QUE ESTA CREANDO EL GRUPO, NO HAY ADMIN DE GRUPO XD
-                 con// Conversación inicial
-                , List.of() // Lista de publicaciones vacía al inicio
+                new ArrayList<>(List.of(EntornoData.getEstudianteActual())), // Usuario que crea el grupo
+                con, // Conversación inicial
+                List.of() // Lista de publicaciones vacía
         );
-        System.out.println(grupoService.crearGrupo(grupoNuevo));
-    }
-    // Método auxiliar para limpiar campos (opcional)
-    private void limpiarCampos() {
+
+        GrupoEstudioDTO grupoCreado = grupoService.crearGrupo(grupoNuevo);
+        System.out.println("Grupo creado: " + grupoCreado);
+
+        // Limpiar los campos después de crear el grupo
         labelTituloContenido.clear();
-        desplegableMaterias.getSelectionModel().clearSelection();
+        labelAutor.clear();
+        desplegableMaterias.setValue(null);
+
+        // Recargar la tabla para reflejar los cambios
+        cargarGruposDisponibles();
     }
 
-    // Método auxiliar para mostrar alerts
-    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
-        Alert alert = new Alert(tipo);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
+    // Agregar este método para configurar la tabla
+    private void configurarTablaGruposDisponibles() {
+        // Obtener la columna de la tabla (la única columna "Grupos Disponibles")
+        TableColumn<GrupoEstudioDTO, String> columnaGrupos = (TableColumn<GrupoEstudioDTO, String>) tablaGruposDisponibles.getColumns().get(0);
+
+        // Configurar la celda para mostrar el nombre del grupo
+        columnaGrupos.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<GrupoEstudioDTO, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<GrupoEstudioDTO, String> param) {
+                return new SimpleStringProperty(param.getValue().nombre());
+            }
+        });
     }
 
     private void cargarGruposDisponibles() {
@@ -129,6 +144,8 @@ public class VistaGruposController {
 
         // Verifica que la tabla no sea null y que tenga tipo correcto
         if (tablaGruposDisponibles != null) {
+            System.out.println("Grupos disponibles después de actualizar:");
+            disponibles.forEach(grupo -> System.out.println(grupo.nombre()));
             tablaGruposDisponibles.getItems().setAll(disponibles);
         }
     }
@@ -168,7 +185,60 @@ public class VistaGruposController {
 
     @FXML
     void unirmeAGrupo(ActionEvent event) {
+        // Obtener el grupo seleccionado en la tabla
+        GrupoEstudioDTO grupoSeleccionado = tablaGruposDisponibles.getSelectionModel().getSelectedItem();
 
+        // Verificar que se haya seleccionado un grupo
+        if (grupoSeleccionado == null) {
+            // Mostrar alerta o mensaje de error
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Selección requerida");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor seleccione un grupo para unirse.");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            // Obtener el ID del usuario actual
+            Long usuarioActualId = EntornoData.getEstudianteActual().id();
+
+            // Usar el método del servicio para agregar el estudiante al grupo
+            boolean agregado = grupoService.agregarEstudianteAGrupo(grupoSeleccionado.id(), usuarioActualId);
+
+            if (agregado) {
+                // Mostrar mensaje de éxito
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Éxito");
+                alert.setHeaderText(null);
+                alert.setContentText("Te has unido exitosamente al grupo: " + grupoSeleccionado.nombre());
+                alert.showAndWait();
+
+                // Recargar la tabla para reflejar los cambios
+                cargarGruposDisponibles();
+                tablaGruposDisponibles.refresh();
+
+                // Limpiar la selección
+                tablaGruposDisponibles.getSelectionModel().clearSelection();
+
+            } else {
+                // Mostrar mensaje de error
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("No se pudo unir al grupo. Intente nuevamente.");
+                alert.showAndWait();
+            }
+
+        } catch (Exception e) {
+            // Manejar cualquier excepción
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Ocurrió un error inesperado: " + e.getMessage());
+            alert.showAndWait();
+            e.printStackTrace();
+        }
     }
 
 }

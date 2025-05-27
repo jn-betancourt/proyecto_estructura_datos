@@ -59,16 +59,14 @@ public class VistaPerfilUsuarioController {
             String seleccion = desplegableMaterias.getValue();
             System.out.println("Materia seleccionada: " + seleccion);
         });
+        configurarAutor();
     }
 
-    // Método de inicialización
-    public void initData(EstudianteDTO estudiante) {
-        this.estudianteActual = EntornoData.getEstudianteActual();
-        this.nombreUsuario.setText(estudiante.nombre());
-    }
-
-    public void setPublicacionesController(VistaPublicacionescontroller controller) {
-        this.publicacionesController = controller;
+    private void configurarAutor() {
+        // Prellenar el campo autor con el usuario actual y hacerlo no editable
+        String nombreUsuario = EntornoData.getEstudianteActual().nombre();
+        labelAutor.setText(nombreUsuario);
+        labelAutor.setEditable(false);
     }
 
     @FXML
