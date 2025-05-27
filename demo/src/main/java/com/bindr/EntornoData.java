@@ -9,6 +9,8 @@ import java.util.List;
 public class EntornoData {
     private static EstudianteDTO estudianteActual;
     private static List<ConversacionDTO> conversaciones;
+
+
     public static List<ConversacionDTO> getConversaciones() {
         return conversaciones;
     }
@@ -18,7 +20,6 @@ public class EntornoData {
     public static void setEstudianteActual(EstudianteDTO estudianteActual) {
         EntornoData.estudianteActual = estudianteActual;
     }
-
     public static void setConversaciones(List<ConversacionDTO> conversacionDTOS) {
         conversaciones = new ArrayList<>(conversacionDTOS);
         if (conversaciones.size() > 0) {

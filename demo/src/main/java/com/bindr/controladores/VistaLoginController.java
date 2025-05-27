@@ -62,7 +62,8 @@ public class VistaLoginController {
             }
             System.out.println(estudiante.id());
             EntornoData.setEstudianteActual(estudiante);
-
+            System.out.println(EntornoData.getEstudianteActual().nombre());
+            
             EntornoData.setConversaciones(
                     MensajeService.obtenerConversacionesPorUsuario(EntornoData.getEstudianteActual().id())
             );
