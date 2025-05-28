@@ -60,13 +60,18 @@ public class VistaLoginController {
                 textFieldIngresarContraseña.clear();
                 return;
             }
-            System.out.println(estudiante.id());
             EntornoData.setEstudianteActual(estudiante);
-            System.out.println(EntornoData.getEstudianteActual().nombre());
             
             EntornoData.setConversaciones(
                     MensajeService.obtenerConversacionesPorUsuario(EntornoData.getEstudianteActual().id())
             );
+
+
+            EntornoData.getConversaciones().forEach(conversacion -> {
+                System.out.println("Conversación ID: " + conversacion.id());
+                System.out.println("Participantes: " + conversacion.participantes());
+            });
+
             //ciclo para verificar las conversaciones
             for(int i = 0; i < EntornoData.getConversaciones().size(); i++) {
                 System.out.println(EntornoData.getConversaciones().get(i).participantes());
