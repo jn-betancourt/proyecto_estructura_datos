@@ -34,6 +34,9 @@ public class GrupoEstudio {
     )
     private List<Estudiante> estudiantes;
 
+    @OneToMany(mappedBy = "grupoEstudio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Publicacion> publicaciones = new ArrayList<>();
+
     public GrupoEstudio() {
         this.estudiantes = new ArrayList<>();
     }
@@ -78,6 +81,14 @@ public class GrupoEstudio {
         this.estudiantes = estudiantes;
     }
 
+    public List<Publicacion> getPublicaciones() {
+        return publicaciones;
+    }
+
+    public void setPublicaciones(List<Publicacion> publicaciones) {
+        this.publicaciones = publicaciones;
+    }
+
     public void agregarEstudiante(Estudiante estudiante) {
         if (!estudiantes.contains(estudiante)) {
             estudiantes.add(estudiante);
@@ -94,6 +105,7 @@ public class GrupoEstudio {
         private List<MateriaEstudio> materia;
         private Conversacion conversacion;
         private List<Estudiante> estudiantes = new ArrayList<>();
+        private List<Publicacion> publicaciones = new ArrayList<>();
 
         public Builder id(Integer id) {
             this.id = id;
@@ -120,6 +132,11 @@ public class GrupoEstudio {
             return this;
         }
 
+        public Builder publicaciones(List<Publicacion> publicaciones) {
+            this.publicaciones = publicaciones;
+            return this;
+        }
+
         public Builder agregarEstudiante(Estudiante estudiante) {
             this.estudiantes.add(estudiante);
             return this;
@@ -132,6 +149,7 @@ public class GrupoEstudio {
             grupo.setMateria(materia);
             grupo.setConversacion(conversacion);
             grupo.setEstudiantes(estudiantes);
+            grupo.setPublicaciones(publicaciones);
             return grupo;
         }
     }
