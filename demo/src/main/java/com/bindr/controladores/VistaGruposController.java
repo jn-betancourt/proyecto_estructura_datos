@@ -98,6 +98,7 @@ public class VistaGruposController {
                 List.of(desplegableMaterias.getValue()), // Materia seleccionada
                 new ArrayList<>(List.of(EntornoData.getEstudianteActual())), // AGREGA EL USUARIO QUE ESTA CREANDO EL GRUPO, NO HAY ADMIN DE GRUPO XD
                  con// Conversación inicial
+                , List.of() // Lista de publicaciones vacía al inicio
         );
         System.out.println(grupoService.crearGrupo(grupoNuevo));
     }

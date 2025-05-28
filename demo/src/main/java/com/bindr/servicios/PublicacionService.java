@@ -9,12 +9,14 @@ import java.util.stream.Collectors;
 
 import com.bindr.dao.EstudianteDao;
 import com.bindr.dao.PublicacionDao;
+import com.bindr.dao.GrupoEstudioDao;
 import com.bindr.dto.EstudianteDTO;
 import com.bindr.dto.PublicacionDTO;
 import com.bindr.dto.ValoracionDTO;
 import com.bindr.modelos.Estudiante;
 import com.bindr.modelos.Publicacion;
 import com.bindr.modelos.Valoracion;
+import com.bindr.modelos.GrupoEstudio;
 
 /**
  * Servicio encargado de la gestión de publicaciones académicas.
@@ -87,6 +89,38 @@ public class PublicacionService {
                 .archivo(dto.archivo()) // nueva propiedad
                 .build();
 
+        return PublicacionDao.crear(publicacion);
+    }
+
+    /**
+     * Crea una publicación asociada a un grupo de estudio.
+     */
+    public static boolean crearPublicacionEnGrupo(PublicacionDTO dto, Long grupoId) {
+        Estudiante publicador = EstudianteDao.buscarPorEmail(dto.publicador().correo());
+        GrupoEstudio grupo = GrupoEstudioDao.buscarPorId(grupoId);
+        if (publicador == null || grupo == null) {
+            return false;
+        }
+
+        List<Valoracion> valoraciones = dto.valoraciones().stream()
+                .map(ValoracionDTO::toEntity)
+                .collect(Collectors.toList());
+
+        Publicacion publicacion = new Publicacion.Builder()
+                .publicador(publicador)
+                .titulo(dto.titulo())
+                .fecha(LocalDateTime.now())
+                .materias(dto.materias())
+                .valoraciones(valoraciones)
+                .archivo(dto.archivo())
+                .grupoEstudio(grupo)
+                .build();
+
+        // Relación bidireccional
+        grupo.getPublicaciones().add(publicacion);
+        publicacion.setGrupoEstudio(grupo);
+
+        // Persistir publicación (JPA actualizará la relación)
         return PublicacionDao.crear(publicacion);
     }
 
