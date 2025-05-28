@@ -48,10 +48,10 @@ public class GrupoEstudioIntegracionTest {
             List.of(estudiante1, estudiante2),
             conversacion
         );
-        boolean grupoEstudio = grupoEstudioService.crearGrupo(grupo);
+        GrupoEstudioDTO grupoEstudio = grupoEstudioService.crearGrupo(grupo);
 
         // Verifica que el grupo fue creado exitosamente
-        Assertions.assertTrue(grupoEstudio);
+        Assertions.assertTrue(grupoEstudio.id() != null, "El grupo no fue creado correctamente");
 
         // Recupera el grupo creado (puedes buscar por nombre si no tienes el ID)
         GrupoEstudioDTO grupoGuardado = grupoEstudioService.listarTodos().stream()
@@ -83,9 +83,9 @@ public class GrupoEstudioIntegracionTest {
         });
         GrupoEstudioService grupoEstudioService = new GrupoEstudioService();
         // Elimina el grupo de prueba si existe
-        grupoEstudioService.listarTodos().stream()
-            .filter(g -> nombreGrupo.equals(g.nombre()))
-            .forEach(g -> grupoEstudioService.eliminarGrupo(g.id()));
+      //  grupoEstudioService.listarTodos().stream()
+        //    .filter(g -> nombreGrupo.equals(g.nombre()))
+          //  .forEach(g -> grupoEstudioService.eliminarGrupo(g.id()));
 
         // Elimina los estudiantes de prueba si existen
         estudianteService.listarEstudiantes().stream()

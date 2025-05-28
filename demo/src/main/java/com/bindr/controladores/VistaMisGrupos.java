@@ -1,19 +1,31 @@
 package com.bindr.controladores;
 
+import com.bindr.EntornoData;
+import com.bindr.dao.EstudianteDao;
+import com.bindr.dto.ConversacionDTO;
+import com.bindr.dto.EstudianteDTO;
+import com.bindr.dto.GrupoEstudioDTO;
+import com.bindr.dto.PublicacionDTO;
+import com.bindr.modelos.MateriaEstudio;
+import com.bindr.servicios.EstudianteService;
+import com.bindr.servicios.GrupoEstudioService;
+import com.bindr.servicios.PublicacionService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class VistaMisGrupos {
 
@@ -33,19 +45,23 @@ public class VistaMisGrupos {
     private DatePicker date;
 
     @FXML
-    private ComboBox<?> desplegableMaterias;
+    private ComboBox<String> desplegableMaterias;
 
     @FXML
     private TableView<?> tablaContenidoPublicacionesGrupos;
 
     @FXML
-    private TableView<?> tablaMisGrupos;
+    private TableView<GrupoEstudioDTO> tablaMisGrupos;
 
     @FXML
     private TextField textAutor;
 
     @FXML
     private TextField textTituloContenido;
+
+    private File archivoSeleccionado;
+
+
 
     @FXML
     void irAInicio(ActionEvent event) {
@@ -70,7 +86,6 @@ public class VistaMisGrupos {
 
     @FXML
     void subirArchivo(ActionEvent event) {
-
     }
 
 }

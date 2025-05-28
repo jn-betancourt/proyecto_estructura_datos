@@ -23,7 +23,7 @@ public class GrupoEstudioService {
      * @param dto DTO con la información del grupo a crear
      * @return true si se creó correctamente, false en caso contrario
      */
-    public boolean crearGrupo(GrupoEstudioDTO dto) {
+    public GrupoEstudioDTO crearGrupo(GrupoEstudioDTO dto) {
         GrupoEstudio grupo = dto.toEntity();
         boolean creado = GrupoEstudioDao.crear(grupo);
 
@@ -36,7 +36,7 @@ public class GrupoEstudioService {
                 }
             }
         }
-        return creado;
+        return GrupoEstudioDTO.fromEntity(grupo);
     }
 
     /**
@@ -54,7 +54,7 @@ public class GrupoEstudioService {
      * @param id Identificador del grupo a eliminar
      * @return true si se eliminó correctamente, false en caso contrario
      */
-    public boolean eliminarGrupo(Integer id) {
+    public boolean eliminarGrupo(Long id) {
         return GrupoEstudioDao.eliminar(id);
     }
 
@@ -63,7 +63,7 @@ public class GrupoEstudioService {
      * @param id Identificador del grupo
      * @return GrupoEstudioDTO correspondiente, o null si no existe
      */
-    public GrupoEstudioDTO obtenerPorId(Integer id) {
+    public GrupoEstudioDTO obtenerPorId(Long id) {
         GrupoEstudio grupo = GrupoEstudioDao.buscarPorId(id);
         return grupo != null ? GrupoEstudioDTO.fromEntity(grupo) : null;
     }
@@ -84,7 +84,7 @@ public class GrupoEstudioService {
      * @param estudianteId Identificador del estudiante
      * @return true si se agregó correctamente, false en caso contrario
      */
-    public boolean agregarEstudianteAGrupo(Integer grupoId, Long estudianteId) {
+    public boolean agregarEstudianteAGrupo(Long grupoId, Long estudianteId) {
         GrupoEstudio grupo = GrupoEstudioDao.buscarPorId(grupoId);
         Estudiante estudiante = EstudianteDao.buscarPorId(estudianteId);
         if (grupo == null || estudiante == null) return false;
@@ -99,7 +99,7 @@ public class GrupoEstudioService {
      * @param estudianteId Identificador del estudiante
      * @return true si se removió correctamente, false en caso contrario
      */
-    public boolean removerEstudianteDeGrupo(Integer grupoId, Long estudianteId) {
+    public boolean removerEstudianteDeGrupo(Long grupoId, Long estudianteId) {
         GrupoEstudio grupo = GrupoEstudioDao.buscarPorId(grupoId);
         if (grupo == null) return false;
 
@@ -113,7 +113,7 @@ public class GrupoEstudioService {
      * @param conversacionId Identificador de la conversación
      * @return true si se asoció correctamente, false en caso contrario
      */
-    public boolean asociarConversacion(Integer grupoId, Long conversacionId) {
+    public boolean asociarConversacion(Long grupoId, Long conversacionId) {
         GrupoEstudio grupo = GrupoEstudioDao.buscarPorId(grupoId);
         Conversacion conversacion = ConversacionDao.buscarPorId(conversacionId);
         if (grupo == null || conversacion == null) return false;

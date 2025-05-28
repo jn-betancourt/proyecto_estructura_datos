@@ -12,6 +12,7 @@ module com.bindr {
     requires org.hibernate.orm.community.dialects;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
+    requires java.desktop;
 
     // Abrir paquetes para reflexión
     opens com.bindr.persistencia to org.hibernate.orm.core;
