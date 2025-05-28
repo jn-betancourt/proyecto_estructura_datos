@@ -44,7 +44,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("VistaLogin"), 600, 400);
+        scene = new Scene(loadFXML("VistaLogin"), 600, 410);
         stage.setScene(scene);
         stage.show();
     }

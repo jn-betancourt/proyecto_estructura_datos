@@ -1,3 +1,4 @@
+
 package com.bindr.controladores;
 
 import com.bindr.EntornoData;
@@ -238,7 +239,7 @@ public class VistaGruposController {
             alert.setContentText("Ocurrió un error inesperado: " + e.getMessage());
             alert.showAndWait();
             e.printStackTrace();
-  }
-}
+        }
+    }
 
 }

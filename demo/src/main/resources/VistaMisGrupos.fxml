@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="582.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bindr.controladores.VistaMisGruposController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bindr.controladores.VistaMisGruposController">
    <children>
-      <BorderPane layoutX="9.0" layoutY="9.0" prefHeight="572.0" prefWidth="752.0">
+      <BorderPane layoutX="9.0" layoutY="2.0" prefHeight="595.0" prefWidth="752.0">
          <top>
             <HBox prefHeight="34.0" prefWidth="602.0" BorderPane.alignment="CENTER">
                <children>
@@ -24,7 +24,7 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Label prefHeight="17.0" prefWidth="92.0" text="Mis grupos">
+                  <Label prefHeight="17.0" prefWidth="92.0" text="MIS GRUPOS">
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>
@@ -36,7 +36,7 @@
             </HBox>
          </top>
          <center>
-            <VBox prefHeight="523.0" prefWidth="659.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="541.0" prefWidth="752.0" BorderPane.alignment="CENTER">
                <children>
                   <HBox prefHeight="189.0" prefWidth="599.0">
                      <VBox.margin>
@@ -75,6 +75,11 @@
                                     <Insets left="10.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
+                              <Label text="Grupo">
+                                 <VBox.margin>
+                                    <Insets left="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
                            </children>
                         </VBox>
                         <VBox prefHeight="208.0" prefWidth="566.0">
@@ -89,7 +94,7 @@
                                     <Insets left="10.0" right="10.0" top="5.0" />
                                  </VBox.margin>
                               </TextField>
-                              <ComboBox fx:id="desplegableMaterias" prefWidth="150.0">
+                              <ComboBox fx:id="desplegableMaterias" prefWidth="150.0" promptText="Elegir Tema">
                                  <VBox.margin>
                                     <Insets left="10.0" right="10.0" top="5.0" />
                                  </VBox.margin>
@@ -104,6 +109,11 @@
                                     <Insets left="10.0" top="5.0" />
                                  </VBox.margin>
                               </Button>
+                              <ComboBox fx:id="desplegableGrupos" prefWidth="150.0" promptText="Elegir Grupo">
+                                 <VBox.margin>
+                                    <Insets left="10.0" top="5.0" />
+                                 </VBox.margin>
+                              </ComboBox>
                               <Button fx:id="btnPublicarEnGrupo" mnemonicParsing="false" onAction="#publicar" prefHeight="25.0" prefWidth="85.0" style="-fx-background-radius: 10; -fx-border-radius: 20; -fx-background-color: #ff9f19;" styleClass="button-secondary" stylesheets="@styles/styles.css" text="Publicar">
                                  <VBox.margin>
                                     <Insets left="410.0" />
@@ -115,7 +125,7 @@
                   </HBox>
                   <HBox prefHeight="235.0" prefWidth="626.0">
                      <VBox.margin>
-                        <Insets left="10.0" right="10.0" top="30.0" />
+                        <Insets left="10.0" right="10.0" top="20.0" />
                      </VBox.margin>
                      <children>
                         <VBox prefHeight="228.0" prefWidth="220.0">
@@ -134,20 +144,20 @@
                            <children>
                               <TableView fx:id="tablaContenidoPublicacionesGrupos" prefHeight="228.0" prefWidth="443.0">
                                  <columns>
-                                    <TableColumn prefWidth="84.0" text="Titulo" />
-                                    <TableColumn prefWidth="84.0" text="Autor" />
-                                    <TableColumn prefWidth="84.0" text="Tema" />
-                                    <TableColumn prefWidth="84.0" text="Tema" />
-                                    <TableColumn prefWidth="157.0" text="Archivos" />
+                                    <TableColumn fx:id="columnaTitulo" prefWidth="84.0" text="Titulo" />
+                                    <TableColumn fx:id="columnaAutor" prefWidth="84.0" text="Autor" />
+                                    <TableColumn fx:id="columnaTema" prefWidth="84.0" text="Tema" />
+                                    <TableColumn fx:id="columnaFecha" prefWidth="84.0" text="Fecha" />
+                                    <TableColumn fx:id="columnaArchivos" prefWidth="157.0" text="Archivos" />
                                  </columns>
                               </TableView>
                            </children>
                         </VBox>
                      </children>
                   </HBox>
-                  <HBox prefHeight="54.0" prefWidth="619.0">
+                  <HBox prefHeight="51.0" prefWidth="752.0">
                      <children>
-                        <Button fx:id="btnAbandonarGrupo" mnemonicParsing="false" onAction="#publicar" prefHeight="33.0" prefWidth="131.0" style="-fx-background-radius: 10; -fx-border-radius: 20; -fx-background-color: #ff9f19;" styleClass="button-secondary" stylesheets="@styles/styles.css" text="Abandonar Grupo">
+                        <Button fx:id="btnAbandonarGrupo" mnemonicParsing="false" onAction="#abandonarGrupo" prefHeight="33.0" prefWidth="131.0" style="-fx-background-radius: 10; -fx-border-radius: 20; -fx-background-color: #ff9f19;" styleClass="button-secondary" stylesheets="@styles/styles.css" text="Abandonar Grupo">
                            <HBox.margin>
                               <Insets bottom="5.0" left="100.0" right="10.0" top="5.0" />
                            </HBox.margin>
