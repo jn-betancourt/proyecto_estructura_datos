@@ -105,6 +105,12 @@ public class VistaMensajesUsuarioController {
 
     private void cargarConversaciones() {
         List<ConversacionDTO> conversaciones = EntornoData.getConversaciones();
+        for (ConversacionDTO conversacion : conversaciones) {
+            System.out.println(conversacion.participantes());
+        }
+        for (ConversacionDTO conversacion : conversaciones) {
+            System.out.println(conversacion.mensajes());
+        }
 
         List<Button> botones = Arrays.asList(btnUsuario1, btnUsuario2, btnUsuario3, btnUsuario4, btnUsuario5, btnUsuario6, btnUsuario7);
 
@@ -168,7 +174,7 @@ public class VistaMensajesUsuarioController {
 
         for (MensajeDTO mensaje : conversacion.mensajes()) {
             boolean esMio = mensaje.autor() != null && mensaje.autor().id().equals(usuarioActualId);
-
+            System.out.println(esMio);
             HBox contenedorMensaje = new HBox(10);
             contenedorMensaje.setAlignment(esMio ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT);
 

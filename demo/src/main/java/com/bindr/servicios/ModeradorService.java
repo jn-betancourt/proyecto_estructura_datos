@@ -47,6 +47,10 @@ public class ModeradorService {
         moderadorDao.eliminar(id.intValue());
     }
 
+    public boolean eliminarUsuario(Long id) {
+    return estudianteService.eliminarEstudiante(id);
+}
+
     // 1. Listar usuarios
     public List<EstudianteDTO> listarUsuarios() {
         return estudianteService.listarEstudiantes();

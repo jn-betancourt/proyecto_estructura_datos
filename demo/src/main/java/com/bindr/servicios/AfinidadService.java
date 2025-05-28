@@ -102,11 +102,12 @@ public class AfinidadService {
 
         // Procesa publicaciones (autor y quienes valoraron/comentaron)
         for (Publicacion publicacion : publicaciones) {
-            Estudiante correoAutor = publicacion.getPublicador(); // ahora es String
+            Estudiante correoAutor = publicacion.getPublicador();
+            if (correoAutor == null) continue; // <-- Previene el NullPointerException
             Estudiante autor = estudiantesPorCorreo.get(correoAutor.getCorreo());
             if (autor == null) continue;
             publicacion.getValoraciones().forEach(valoracion -> {
-                String correoEvaluador = valoracion.getAutor(); // ahora es String
+                String correoEvaluador = valoracion.getAutor();
                 Estudiante evaluador = estudiantesPorCorreo.get(correoEvaluador);
                 if (evaluador != null && !evaluador.equals(autor)) {
                     registrarInteraccion(autor, evaluador);

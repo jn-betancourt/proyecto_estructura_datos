@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bindr.controladores.PanelAdminController">
+    <top>
+        <HBox spacing="10">
+            <Label text="Panel de Moderador/Administrador" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+    <left>
+        <VBox spacing="10">
+            <Label text="Gestión de Usuarios"/>
+            <Button text="Listar Usuarios" fx:id="btnListarUsuarios" onAction="#onListarUsuarios"/>
+            <Button text="Agregar Usuario" fx:id="btnAgregarUsuario" onAction="#onAgregarUsuario"/>
+            <Button text="Eliminar Usuario" fx:id="btnEliminarUsuario" onAction="#onEliminarUsuario"/>
+            <Separator/>
+            <Label text="Gestión de Contenidos"/>
+            <Button text="Listar Publicaciones" fx:id="btnListarPublicaciones" onAction="#onListarPublicaciones"/>
+            <Button text="Eliminar Publicación" fx:id="btnEliminarPublicacion" onAction="#onEliminarPublicacion"/>
+        </VBox>
+    </left>
+    <center>
+        <TabPane fx:id="tabPaneReportes">
+            <Tab text="Usuarios">
+                <VBox spacing="10">
+                    <Label text="Lista de Usuarios"/>
+                    <TableView fx:id="tablaUsuarios">
+                        <columns>
+                            <TableColumn text="ID" fx:id="colUsuarioId"/>
+                            <TableColumn text="Nombre" fx:id="colUsuarioNombre"/>
+                            <TableColumn text="Correo" fx:id="colUsuarioCorreo"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </Tab>
+            <Tab text="Publicaciones">
+                <VBox spacing="10">
+                    <Label text="Lista de Publicaciones"/>
+                    <TableView fx:id="tablaPublicaciones">
+                        <columns>
+                            <TableColumn text="ID" fx:id="colPubId"/>
+                            <TableColumn text="Título" fx:id="colPubTitulo"/>
+                            <TableColumn text="Autor" fx:id="colPubAutor"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </Tab>
+            <Tab text="Reportes">
+                <VBox spacing="10">
+                    <Label text="Contenidos más valorados"/>
+                    <TableView fx:id="tablaContenidosValorados">
+                        <columns>
+                            <TableColumn text="Título" fx:id="colTitulo"/>
+                            <TableColumn text="Valoraciones" fx:id="colValoraciones"/>
+                        </columns>
+                    </TableView>
+                    <Separator/>
+                    <Label text="Estudiantes con más conexiones"/>
+                    <TableView fx:id="tablaEstudiantesConexiones">
+                        <columns>
+                            <TableColumn text="Nombre" fx:id="colNombreEstudiante"/>
+                            <TableColumn text="Conexiones" fx:id="colConexiones"/>
+                        </columns>
+                    </TableView>
+                    <Separator/>
+                    <Label text="Caminos más cortos entre dos estudiantes"/>
+                    <HBox spacing="5">
+                        <TextField fx:id="txtEstudianteOrigen" promptText="Estudiante Origen"/>
+                        <TextField fx:id="txtEstudianteDestino" promptText="Estudiante Destino"/>
+                        <Button text="Buscar Camino" fx:id="btnBuscarCamino" onAction="#onBuscarCamino"/>
+                    </HBox>
+                    <ListView fx:id="listaCaminoCorto"/>
+                    <Separator/>
+                    <Label text="Comunidades de estudio (clústeres)"/>
+                    <ListView fx:id="listaComunidades"/>
+                    <Separator/>
+                    <Label text="Niveles de participación"/>
+                    <TableView fx:id="tablaParticipacion">
+                        <columns>
+                            <TableColumn text="Estudiante" fx:id="colEstParticipacion"/>
+                            <TableColumn text="Nivel" fx:id="colNivelParticipacion"/>
+                        </columns>
+                    </TableView>
+                    <Separator/>
+                    <Label text="Visualización del grafo de afinidad"/>
+                    <ScrollPane prefHeight="200" prefWidth="400">
+                        <Pane fx:id="grafoPane" minHeight="200" minWidth="400"/>
+                    </ScrollPane>
+                    <Separator/>
+                </VBox>
+            </Tab>
+        </TabPane>
+    </center>
+</BorderPane>

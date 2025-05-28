@@ -1,7 +1,20 @@
 package com.bindr;
 
 import java.io.IOException;
+
+import com.bindr.dao.ConversacionDao;
+import com.bindr.dao.EstudianteDao;
+import com.bindr.dao.GrupoEstudioDao;
+import com.bindr.dao.ModeradorDao;
+import com.bindr.dao.PublicacionDao;
+import com.bindr.dao.SolicitudAyudaDao;
+import com.bindr.dto.ModeradorDTO;
+import com.bindr.modelos.Conversacion;
+import com.bindr.modelos.Moderador;
 import com.bindr.persistencia.HibernateConfig;
+import com.bindr.servicios.AfinidadService;
+import com.bindr.servicios.ModeradorService;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +30,14 @@ public class App extends Application {
     private static Scene scene;
 
     public static void main(String[] args) {
+        AfinidadService afinidadService = new AfinidadService();
+        afinidadService.reconstruirGrafo(
+            EstudianteDao.listarTodos(),
+            SolicitudAyudaDao.obtenerTodas(),
+            GrupoEstudioDao.listarTodos(),
+            PublicacionDao.listarTodas(),
+            ConversacionDao.listarTodas()
+        );
         HibernateConfig.getEntityManager();
         launch();
     }

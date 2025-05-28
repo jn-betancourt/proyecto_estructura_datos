@@ -25,16 +25,20 @@ public class ConversacionDao {
    public static List<Conversacion> obtenerPorUsuarioId(Long usuarioId) {
     EntityManager manager = HibernateConfig.getEntityManager();
     try {
+        // Buscar el objeto Estudiante por su ID
+        com.bindr.modelos.Estudiante estudiante = manager.find(com.bindr.modelos.Estudiante.class, usuarioId);
+        if (estudiante == null) {
+            return List.of();
+        }
         TypedQuery<Conversacion> query = manager.createQuery(
             "SELECT DISTINCT c FROM Conversacion c " +
-            "JOIN FETCH c.participantes p " +
-            "WHERE p.id = :usuarioId",
+            "JOIN FETCH c.participantes " +
+            "WHERE :estudiante MEMBER OF c.participantes",
             Conversacion.class
         );
-        query.setParameter("usuarioId", usuarioId);
+        query.setParameter("estudiante", estudiante);
         List<Conversacion> conversaciones = query.getResultList();
 
-        // Deserializar mensajes en cada conversación
         conversaciones.forEach(ConversacionDao::deserializarMensajes);
 
         return conversaciones;
@@ -68,8 +72,9 @@ public class ConversacionDao {
     public static List<Conversacion> listarTodas() {
         EntityManager manager = HibernateConfig.getEntityManager();
         try {
+            // Usar DISTINCT para evitar duplicados por el join
             TypedQuery<Conversacion> query = manager.createQuery(
-                    "SELECT c FROM Conversacion c", Conversacion.class);
+                "SELECT DISTINCT c FROM Conversacion c LEFT JOIN FETCH c.participantes", Conversacion.class);
             List<Conversacion> lista = query.getResultList();
             // Deserializar mensajes en cada conversacion
             lista.forEach(ConversacionDao::deserializarMensajes);
@@ -77,7 +82,7 @@ public class ConversacionDao {
         } catch (Exception e) {
             e.printStackTrace();
             return List.of();
-        }finally{
+        } finally {
             HibernateConfig.closeEntityManager();
         }
     }

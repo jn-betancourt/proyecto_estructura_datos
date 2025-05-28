@@ -6,6 +6,7 @@ import com.bindr.dto.LoginRequestDTO;
 import com.bindr.persistencia.HibernateConfig;
 import com.bindr.servicios.AutenticacionService;
 import com.bindr.servicios.MensajeService;
+import com.bindr.servicios.ModeradorService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,6 +52,18 @@ public class VistaLoginController {
         }
 
         try {
+            // --- NUEVO: Verificar si es moderador/administrador ---
+            ModeradorService moderadorService = new ModeradorService();
+            if (moderadorService.buscarModeradorPorCorreo(correo) != null) {
+                // Es moderador, cargar panel admin
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/PanelAdmin.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+                return;
+            }
+            // --- FIN NUEVO ---
 
             LoginRequestDTO login = new LoginRequestDTO(correo, contraseña);
             EstudianteDTO estudiante = authService.autenticar(login);
@@ -61,7 +74,7 @@ public class VistaLoginController {
                 return;
             }
             EntornoData.setEstudianteActual(estudiante);
-            
+
             EntornoData.setConversaciones(
                     MensajeService.obtenerConversacionesPorUsuario(EntornoData.getEstudianteActual().id())
             );

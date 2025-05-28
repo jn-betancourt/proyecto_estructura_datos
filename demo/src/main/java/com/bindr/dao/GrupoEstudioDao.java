@@ -79,12 +79,14 @@ public class GrupoEstudioDao {
         EntityManager manager = HibernateConfig.getEntityManager();
         try {
             TypedQuery<GrupoEstudio> query = manager.createQuery(
-                "SELECT g FROM GrupoEstudio g", GrupoEstudio.class
+                "SELECT DISTINCT g FROM GrupoEstudio g LEFT JOIN FETCH g.estudiantes", GrupoEstudio.class
             );
             return query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
             return List.of(); // lista vacía si hay error
+        } finally {
+            HibernateConfig.closeEntityManager();
         }
     }
 
